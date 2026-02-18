@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKADA YUTA OFFICIAL SITE - オカダユータ公式サイト</title>
+  <meta name="description" content="シンガーソングライター オカダユータ公式サイト。ライブ情報、リリース、プロフィール、公式LINE案内など。" />
+
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50:  '#fdfaf5',
+              100: '#f7eed8',
+              200: '#eddcb5',
+              300: '#dfc48e',
+              400: '#c9a666',
+              500: '#b08d4a',
+              600: '#8b6d35',
+              700: '#6b5228',
+              800: '#56421f',
+              900: '#3d2e16',
+              950: '#231a0d',
+            },
+            terracotta: {
+              50:  '#fef5f8',
+              100: '#fde8ef',
+              200: '#fccfe0',
+              300: '#f9a6c6',
+              400: '#f472a8',
+              500: '#e8458b',
+              600: '#d42d74',
+              700: '#b2205e',
+              800: '#931d4e',
+              900: '#7c1b43',
+            },
+            gold: {
+              50:  '#fffdf5',
+              100: '#fef7d6',
+              200: '#fdeead',
+              300: '#fce07a',
+              400: '#f9cf47',
+              500: '#edb825',
+              600: '#d19a14',
+              700: '#a87614',
+              800: '#8b5f17',
+              900: '#754e19',
+            },
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', '"Yu Gothic"', '"Hiragino Kaku Gothic ProN"', '"Source Han Sans JP"', 'system-ui', 'sans-serif'],
+            heading: ['"Yu Gothic"', '"Hiragino Kaku Gothic ProN"', '"Noto Sans JP"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            wider2: '0.1em',
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Google Fonts: Noto Sans JP + Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== BASE ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Custom scrollbar - hidden for horizontal */
+    ::-webkit-scrollbar { display: none; }
+
+    /* Focus visible outline */
+    *:focus-visible {
+      outline: 3px solid #e8458b;
+      outline-offset: 2px;
+    }
+
+    /* ===== HORIZONTAL SCROLL CONTAINER ===== */
+    .h-scroll-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      will-change: transform;
+      /* No CSS transition — JS handles smooth interpolation */
+    }
+
+    /* Each panel = one viewport width */
+    .h-panel {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ===== FIXED LEFT NAV ===== */
+    .fixed-left-nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 80px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .fixed-left-nav a {
+      pointer-events: auto;
+    }
+
+    /* ===== FIXED TOP LEFT LOGO ===== */
+    .fixed-logo {
+      position: fixed;
+      top: 24px;
+      left: 32px;
+      z-index: 100;
+    }
+
+    /* ===== SECTION NUMBER ===== */
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 8rem;
+      line-height: 1;
+      color: rgba(35, 26, 13, 0.04);
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ===== VERTICAL TEXT (section titles) ===== */
+    .vertical-title {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: rgba(35, 26, 13, 0.08);
+      font-size: 1.1rem;
+      position: absolute;
+      left: 100px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ===== NAV DOTS ===== */
+    .nav-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(35, 26, 13, 0.15);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .nav-dot.active {
+      background: #e8458b;
+      width: 8px;
+      height: 24px;
+      border-radius: 4px;
+    }
+
+    /* ===== FIXED SOCIAL (bottom right) ===== */
+    .fixed-social {
+      position: fixed;
+      bottom: 28px;
+      right: 32px;
+      z-index: 100;
+      display: flex;
+      gap: 12px;
+    }
+    .fixed-social a {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(35, 26, 13, 0.06);
+      transition: all 0.3s ease;
+    }
+    .fixed-social a:hover {
+      background: #e8458b;
+    }
+    .fixed-social a:hover svg {
+      color: white;
+    }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #e8458b, #edb825);
+      z-index: 200;
+      /* width driven by JS animation loop */
+    }
+
+    /* ===== PANEL CONTENT ANIMATIONS ===== */
+    .panel-content {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .panel-content.delay-1 { transition-delay: 0.15s; }
+    .panel-content.delay-2 { transition-delay: 0.3s; }
+    .panel-content.delay-3 { transition-delay: 0.45s; }
+    .panel-content.delay-4 { transition-delay: 0.6s; }
+
+    .h-panel.active .panel-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== HERO specific ===== */
+    .hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(35, 26, 13, 0.03) 0%,
+        rgba(35, 26, 13, 0.06) 40%,
+        rgba(35, 26, 13, 0.50) 100%
+      );
+    }
+
+    /* ===== SECTION DIVIDER ===== */
+    .section-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #e8458b, #edb825);
+      border-radius: 2px;
+    }
+
+    /* ===== Tour ticker vertical scroll (right panel) ===== */
+    .tour-ticker-scroll {
+      animation: tourTickerUp 14s linear infinite;
+    }
+    @keyframes tourTickerUp {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    /* ===== Tour marquee horizontal scroll (hero bottom bar) ===== */
+    .hero-tour-marquee {
+      animation: tourMarquee 30s linear infinite;
+    }
+    @keyframes tourMarquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    #tourTickerWrap::before,
+    #tourTickerWrap::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 8px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    #tourTickerWrap::before {
+      top: 0;
+      background: linear-gradient(to bottom, rgb(107 82 40), transparent);
+    }
+    #tourTickerWrap::after {
+      bottom: 0;
+      background: linear-gradient(to top, rgb(107 82 40), transparent);
+    }
+
+    /* ===== INNER SCROLL for overflow content ===== */
+    .inner-scroll {
+      overflow-y: auto;
+      max-height: calc(100vh - 120px);
+      padding-right: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: #eddcb5 transparent;
+    }
+    .inner-scroll::-webkit-scrollbar { width: 4px; }
+    .inner-scroll::-webkit-scrollbar-track { background: transparent; }
+    .inner-scroll::-webkit-scrollbar-thumb { background: #eddcb5; border-radius: 2px; }
+
+    /* ===== CARD HOVER ===== */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(35, 26, 13, 0.12);
+    }
+
+    /* ===== PERSISTENT SECTION NAV (bottom center, desktop) ===== */
+    .section-nav {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 100;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 10px 24px;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(35, 26, 13, 0.18);
+      border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(35, 26, 13, 0.12);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .section-nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .section-nav a {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      color: #8b6d35;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: color 0.3s ease, background 0.3s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .section-nav a:hover {
+      color: #6b5228;
+      background: rgba(107, 82, 40, 0.08);
+    }
+    .section-nav a.active {
+      color: #e8458b;
+      font-weight: 700;
+      background: rgba(232, 69, 139, 0.10);
+    }
+    .section-nav .nav-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(35, 26, 13, 0.35);
+      flex-shrink: 0;
+    }
+
+    /* ===== MOBILE: revert to vertical scroll ===== */
+    @media (max-width: 751px) {
+      html, body {
+        overflow: auto;
+        height: auto;
+      }
+      .h-scroll-container {
+        position: relative;
+        display: block;
+        height: auto;
+        transform: none !important;
+        transition: none;
+      }
+      .h-panel {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+      }
+      .fixed-left-nav,
+      .fixed-social,
+      .scroll-progress,
+      .section-number,
+      .vertical-title,
+      .section-nav {
+        display: none !important;
+      }
+      .fixed-logo {
+        position: fixed;
+        top: 12px;
+        left: 16px;
+      }
+      .panel-content {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .inner-scroll {
+        max-height: none;
+        overflow: visible;
+      }
+    }
+
+    /* ===== MOBILE HAMBURGER ===== */
+    .hamburger-line {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .menu-open .hamburger-line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .menu-open .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-open .hamburger-line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    .mobile-nav {
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mobile-nav.open {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+
+<body class="font-sans text-navy-900 bg-white leading-relaxed antialiased">
+
+  <!-- ===== FIXED LEFT NAVIGATION (Desktop) ===== -->
+  <nav class="fixed-left-nav hidden lg:flex" aria-label="セクションナビゲーション">
+    <div class="nav-dots">
+      <button class="nav-dot active" data-index="0" aria-label="Hero"></button>
+      <button class="nav-dot" data-index="1" aria-label="Live"></button>
+      <button class="nav-dot" data-index="2" aria-label="Profile"></button>
+      <button class="nav-dot" data-index="3" aria-label="Discography"></button>
+      <button class="nav-dot" data-index="4" aria-label="坂道さんぽ"></button>
+      <button class="nav-dot" data-index="5" aria-label="Shop"></button>
+      <button class="nav-dot" data-index="6" aria-label="Fan Club"></button>
+      <button class="nav-dot" data-index="7" aria-label="Contact"></button>
+      <button class="nav-dot" data-index="8" aria-label="LINE"></button>
+    </div>
+  </nav>
+
+  <!-- ===== FIXED TOP LEFT LOGO (Desktop) ===== -->
+  <div class="fixed-logo hidden lg:flex items-center gap-3 z-[100]">
+    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-400 via-rose-500 to-fuchsia-500 shadow-lg shadow-pink-400/30 flex items-center justify-center">
+      <span class="text-white font-bold text-[11px] tracking-wider2">OY</span>
+    </div>
+    <div>
+      <p class="text-navy-800 font-heading font-bold text-[11px] tracking-wider2 leading-tight">OKADA YUTA</p>
+      <p class="text-navy-600 text-[9px] tracking-wider2 font-medium">OFFICIAL SITE</p>
+    </div>
+  </div>
+
+  <!-- Fixed social icons removed — replaced by dedicated SNS Portal panel -->
+  <div class="fixed-social hidden lg:flex" style="display:none!important">
+    <a href="https://x.com/yuta129" target="_blank" rel="noopener noreferrer" aria-label="X">
+      <svg class="w-3.5 h-3.5 text-navy-500" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+    </a>
+    <a href="https://www.instagram.com/okadayuta.official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg class="w-3.5 h-3.5 text-navy-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+    </a>
+    <a href="https://www.youtube.com/channel/UCoUMlbOsdQvemU-cl_H_vMw" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+      <svg class="w-3.5 h-3.5 text-navy-500" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+    </a>
+    <a href="https://lin.ee/rbAJhbw" target="_blank" rel="noopener noreferrer" aria-label="LINE">
+      <svg class="w-3.5 h-3.5 text-navy-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"></path></svg>
+    </a>
+  </div>
+
+  <!-- ===== SCROLL PROGRESS BAR ===== -->
+  <div class="scroll-progress" id="scrollProgress" style="width: 0%"></div>
+
+  <!-- ===== PERSISTENT SECTION NAV (Desktop, bottom center) ===== -->
+  <nav class="section-nav hidden lg:flex" id="sectionNav" aria-label="セクション移動">
+    <a href="#" onclick="goToPanel(0); return false;" class="active" data-nav="0">Home</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(1); return false;" data-nav="1">Live</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(2); return false;" data-nav="2">Profile</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(3); return false;" data-nav="3">Works</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(4); return false;" data-nav="4">坂道さんぽ</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(5); return false;" data-nav="5">Shop</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(6); return false;" data-nav="6">ファンクラブ</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(7); return false;" data-nav="7">Contact</a>
+    <span class="nav-sep"></span>
+    <a href="#" onclick="goToPanel(8); return false;" data-nav="8">LINE</a>
+  </nav>
+
+  <!-- ===== MOBILE HOME BUTTON (floating, appears on scroll) ===== -->
+  <button
+    id="homeBtnMobile"
+    onclick="goToPanel(0)"
+    class="fixed bottom-6 right-5 z-[110] lg:hidden flex items-center justify-center w-11 h-11 bg-white/90 backdrop-blur-md border border-navy-200/60 rounded-full shadow-lg shadow-navy-200/30 text-navy-500 hover:bg-navy-700 hover:text-white transition-all duration-300 opacity-0 pointer-events-none cursor-pointer"
+    style="transition: opacity 0.4s ease, background 0.3s ease, color 0.3s ease;"
+    aria-label="トップに戻る"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"></path></svg>
+  </button>
+
+  <!-- ===== MOBILE HEADER ===== -->
+  <header id="mobileHeader" class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm lg:hidden">
+    <div class="px-4 sm:px-6">
+      <div class="flex items-center justify-between h-14">
+        <a href="#" class="flex items-center gap-2 shrink-0">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 via-rose-500 to-fuchsia-500 shadow-md shadow-pink-400/30 flex items-center justify-center">
+            <span class="text-white font-bold text-[10px] tracking-wider2">OY</span>
+          </div>
+          <div>
+            <p class="text-navy-800 font-heading font-bold text-[11px] tracking-wider2 leading-tight">OKADA YUTA</p>
+          </div>
+        </a>
+        <button id="hamburger" class="flex flex-col justify-center items-center w-10 h-10 gap-[6px] z-50" aria-label="メニューを開く" aria-expanded="false">
+          <span class="hamburger-line block w-6 h-[2px] bg-navy-800 rounded-full origin-center"></span>
+          <span class="hamburger-line block w-6 h-[2px] bg-navy-800 rounded-full origin-center"></span>
+          <span class="hamburger-line block w-6 h-[2px] bg-navy-800 rounded-full origin-center"></span>
+        </button>
+      </div>
+    </div>
+    <nav id="mobileNav" class="mobile-nav fixed top-0 right-0 w-72 h-full bg-white shadow-2xl z-40 pt-20 px-6" aria-label="モバイルナビゲーション">
+      <ul class="flex flex-col gap-1">
+        <li><a href="#m-hero" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">HOME</a></li>
+        <li><a href="#m-live" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">LIVE</a></li>
+        <li><a href="#m-profile" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">PROFILE</a></li>
+        <li><a href="#m-discography" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">WORKS</a></li>
+        <li><a href="#m-sakamichi" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">坂道さんぽ</a></li>
+        <li><a href="#m-store" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">SHOP</a></li>
+        <li><a href="#m-fanclub" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">ファンクラブ</a></li>
+        <li><a href="#m-contact" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">CONTACT</a></li>
+        <li><a href="#m-line" class="mobile-nav-link block py-3 px-4 text-sm font-bold tracking-wider2 text-navy-700 hover:bg-navy-50 rounded-lg">公式LINE</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="navBackdrop" class="fixed inset-0 bg-navy-950/40 z-30 hidden lg:hidden" aria-hidden="true"></div>
+
+
+  <!-- ================================================================
+       HORIZONTAL SCROLL PANELS
+       ================================================================ -->
+  <div class="h-scroll-container" id="hScroll">
+
+    <!-- ===== PANEL 0: HERO ===== -->
+    <section class="h-panel active" id="m-hero" data-panel="0">
+      <div class="h-full w-full flex flex-col lg:flex-row">
+
+        <!-- LEFT: Hero Photo (approx 73% on desktop) -->
+        <div class="relative lg:w-[73%] h-[45vh] lg:h-full shrink-0 overflow-hidden">
+          <img src="表紙.JPG" alt="オカダユータ アーティストビジュアル" class="absolute inset-0 w-full h-full object-cover object-top" loading="eager" />
+          <div class="hero-overlay absolute inset-0"></div>
+
+          <!-- Geometric line art overlay — luminous white lines with glow -->
+          <div class="absolute inset-0 z-[5] pointer-events-none" aria-hidden="true">
+            <svg class="w-full h-full" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Glow filter for light-beam effect -->
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+                <!-- Stronger glow for particles -->
+                <filter id="glowStrong" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur stdDeviation="8" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+                <!-- Soft radial gradient for light source (top-right) -->
+                <radialGradient id="lightSource" cx="85%" cy="15%" r="60%">
+                  <stop offset="0%" stop-color="white" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+
+              <!-- Ambient light wash from top-right -->
+              <rect width="1200" height="900" fill="url(#lightSource)"/>
+
+              <!-- ===== LIGHT BEAMS (diagonal rays from top-right) ===== -->
+              <line x1="1200" y1="0" x2="400" y2="900" stroke="white" stroke-opacity="0.12" stroke-width="1.5" filter="url(#glow)"/>
+              <line x1="1200" y1="0" x2="550" y2="900" stroke="white" stroke-opacity="0.08" stroke-width="1" filter="url(#glow)"/>
+              <line x1="1100" y1="0" x2="200" y2="900" stroke="white" stroke-opacity="0.06" stroke-width="0.8" filter="url(#glow)"/>
+              <line x1="1200" y1="100" x2="700" y2="900" stroke="white" stroke-opacity="0.09" stroke-width="1.2" filter="url(#glow)"/>
+              <line x1="1050" y1="0" x2="100" y2="700" stroke="white" stroke-opacity="0.05" stroke-width="0.7" filter="url(#glow)"/>
+
+              <!-- ===== GEOMETRIC SHAPES ===== -->
+              <!-- Diamond (right area) -->
+              <polygon points="880,60 1060,270 880,480 700,270" fill="none" stroke="white" stroke-opacity="0.18" stroke-width="1" filter="url(#glow)"/>
+              <polygon points="880,130 1020,270 880,410 740,270" fill="none" stroke="white" stroke-opacity="0.12" stroke-width="0.8"/>
+
+              <!-- Concentric circles (left area) -->
+              <circle cx="180" cy="200" r="150" fill="none" stroke="white" stroke-opacity="0.14" stroke-width="0.8" filter="url(#glow)"/>
+              <circle cx="180" cy="200" r="100" fill="none" stroke="white" stroke-opacity="0.10" stroke-width="0.7"/>
+              <circle cx="180" cy="200" r="55" fill="none" stroke="white" stroke-opacity="0.07" stroke-width="0.5"/>
+
+              <!-- Triangle cluster (top-center) -->
+              <polygon points="500,50 580,165 420,165" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="0.8" filter="url(#glow)"/>
+              <polygon points="580,165 660,280 500,280" fill="none" stroke="white" stroke-opacity="0.10" stroke-width="0.7"/>
+              <polygon points="420,165 500,280 340,280" fill="none" stroke="white" stroke-opacity="0.08" stroke-width="0.6"/>
+
+              <!-- Elegant arc (left-center) -->
+              <path d="M 0,400 Q 250,250 350,500 T 550,720" fill="none" stroke="white" stroke-opacity="0.10" stroke-width="0.8" filter="url(#glow)"/>
+
+              <!-- ===== LIGHT PARTICLES (glowing dots) ===== -->
+              <!-- Large particles with strong glow -->
+              <circle cx="950" cy="120" r="3" fill="white" fill-opacity="0.35" filter="url(#glowStrong)"/>
+              <circle cx="750" cy="200" r="2.5" fill="white" fill-opacity="0.25" filter="url(#glowStrong)"/>
+              <circle cx="1100" cy="350" r="2" fill="white" fill-opacity="0.30" filter="url(#glowStrong)"/>
+              <circle cx="500" cy="100" r="2.5" fill="white" fill-opacity="0.20" filter="url(#glowStrong)"/>
+              <circle cx="300" cy="300" r="2" fill="white" fill-opacity="0.18" filter="url(#glowStrong)"/>
+
+              <!-- Medium particles -->
+              <circle cx="650" cy="320" r="2" fill="white" fill-opacity="0.22" filter="url(#glow)"/>
+              <circle cx="850" cy="450" r="1.8" fill="white" fill-opacity="0.18" filter="url(#glow)"/>
+              <circle cx="400" cy="500" r="2" fill="white" fill-opacity="0.15" filter="url(#glow)"/>
+              <circle cx="1050" cy="500" r="1.5" fill="white" fill-opacity="0.20" filter="url(#glow)"/>
+              <circle cx="200" cy="600" r="1.8" fill="white" fill-opacity="0.12" filter="url(#glow)"/>
+              <circle cx="700" cy="150" r="1.5" fill="white" fill-opacity="0.25" filter="url(#glow)"/>
+
+              <!-- Small sparkle dots (no filter, crisp) -->
+              <circle cx="980" cy="200" r="1.2" fill="white" fill-opacity="0.40"/>
+              <circle cx="820" cy="100" r="1" fill="white" fill-opacity="0.35"/>
+              <circle cx="600" cy="250" r="1" fill="white" fill-opacity="0.30"/>
+              <circle cx="1150" cy="250" r="1.2" fill="white" fill-opacity="0.35"/>
+              <circle cx="350" cy="150" r="1" fill="white" fill-opacity="0.25"/>
+              <circle cx="150" cy="450" r="1" fill="white" fill-opacity="0.20"/>
+              <circle cx="750" cy="550" r="1.2" fill="white" fill-opacity="0.22"/>
+              <circle cx="500" cy="400" r="0.8" fill="white" fill-opacity="0.30"/>
+              <circle cx="1000" cy="650" r="1" fill="white" fill-opacity="0.18"/>
+              <circle cx="280" cy="750" r="1.2" fill="white" fill-opacity="0.15"/>
+              <circle cx="900" cy="300" r="0.8" fill="white" fill-opacity="0.35"/>
+              <circle cx="450" cy="650" r="1" fill="white" fill-opacity="0.16"/>
+            </svg>
+          </div>
+
+          <!-- Tour news ticker bar (bottom of photo, desktop only) -->
+          <a href="https://www.okadayuta.com/liveschedule" target="_blank" rel="noopener noreferrer" class="hidden lg:block absolute bottom-0 left-0 right-0 z-10 panel-content delay-2 group/ticker no-underline">
+            <div class="bg-gradient-to-r from-fuchsia-900/85 via-pink-900/85 to-rose-900/85 backdrop-blur-md border-t border-pink-300/20 group-hover/ticker:from-fuchsia-800/90 group-hover/ticker:via-pink-800/90 group-hover/ticker:to-rose-800/90 transition-all duration-300">
+              <div class="flex items-center h-[36px] overflow-hidden">
+                <!-- TOUR badge + title (fixed left) -->
+                <div class="shrink-0 flex items-center gap-2.5 px-4 border-r border-white/15 h-full">
+                  <span class="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse"></span>
+                  <span class="text-gold-400 text-xs font-bold tracking-[0.15em] uppercase whitespace-nowrap">Tour 2026</span>
+                  <span class="text-white/60 text-xs whitespace-nowrap">|</span>
+                  <span class="text-white/90 text-xs font-bold tracking-wide whitespace-nowrap">FIRE CRACKER Hall Concert Tour</span>
+                </div>
+                <!-- Scrolling text (horizontal marquee) -->
+                <div class="flex-1 overflow-hidden relative h-full flex items-center">
+                  <div class="hero-tour-marquee whitespace-nowrap leading-[36px]">
+                    <span class="text-white/70 text-xs inline-block px-6">5/16(土) 神戸・西神中央ホール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-white/70 text-xs inline-block px-6">7/25(土) 東京・府中市民会館ルミエール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-white/70 text-xs inline-block px-6">9/19(土) 奈良・なら100年会館中ホール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-white/70 text-xs inline-block px-6">11/3(火・祝) 水戸・市民会館小ホール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-gold-400 text-xs font-bold inline-block px-6">チケット好評発売中!</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <!-- Duplicate for seamless loop -->
+                    <span class="text-white/70 text-xs inline-block px-6">5/16(土) 神戸・西神中央ホール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-white/70 text-xs inline-block px-6">7/25(土) 東京・府中市民会館ルミエール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-white/70 text-xs inline-block px-6">9/19(土) 奈良・なら100年会館中ホール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-white/70 text-xs inline-block px-6">11/3(火・祝) 水戸・市民会館小ホール</span>
+                    <span class="text-white/50 text-xs inline-block px-1">/</span>
+                    <span class="text-gold-400 text-xs font-bold inline-block px-6">チケット好評発売中!</span>
+                  </div>
+                </div>
+                <!-- CTA button (right side) -->
+                <div class="shrink-0 flex items-center h-full px-3 border-l border-white/15">
+                  <div class="flex items-center gap-1.5 bg-gradient-to-r from-pink-500 to-fuchsia-500 hover:from-pink-400 hover:to-fuchsia-400 rounded-full px-3 py-1 transition-all duration-300 group-hover/ticker:shadow-[0_0_12px_rgba(236,72,153,0.5)]">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <span class="text-white text-[10px] font-bold tracking-wide whitespace-nowrap">特設ページ</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Artist Name overlay on photo -->
+          <div class="absolute bottom-10 lg:bottom-16 left-6 sm:left-10 lg:left-14 z-10 panel-content">
+            <p class="text-white/60 text-sm sm:text-base lg:text-xl tracking-[0.4em] uppercase mb-3" style="font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic;">
+              Singer-Songwriter
+            </p>
+            <h1 class="text-white leading-[1.1] inline-block" style="font-family: 'Cormorant Garamond', serif;">
+              <span class="block text-4xl sm:text-5xl lg:text-[5.5rem] font-light tracking-[0.15em] pb-3 border-b border-white/40">OKADA YUTA</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- RIGHT: Navigation Panels + SNS -->
+        <div class="flex-1 bg-white flex flex-col justify-center px-4 sm:px-6 lg:px-5 xl:px-7 py-4 lg:pt-6 lg:pb-2 overflow-y-auto">
+          <div class="w-full max-w-sm mx-auto lg:max-w-[340px] xl:max-w-[360px]">
+
+            <!-- 8 Navigation Panels — 2 columns × 4 rows -->
+            <div class="grid grid-cols-2 gap-1.5 panel-content delay-1">
+
+              <!-- 1. 公式LINE — green -->
+              <a href="#" onclick="goToPanel(8); return false;" class="group bg-[#06C755]/10 border border-[#06C755]/25 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-[#06C755]/20 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-[#06C755]/15 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-[#06C755]" fill="currentColor" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">公式LINE</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">最新情報をGET</span>
+                </div>
+              </a>
+
+              <!-- 2. プロフィール — rose -->
+              <a href="#" onclick="goToPanel(2); return false;" class="group bg-rose-50 border border-rose-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-rose-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-rose-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">プロフィール</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">Profile</span>
+                </div>
+              </a>
+
+              <!-- 3. ライブ情報 — terracotta -->
+              <a href="#" onclick="goToPanel(1); return false;" class="group bg-terracotta-50 border border-terracotta-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-terracotta-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-terracotta-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">ライブ情報</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">Live Schedule</span>
+                </div>
+              </a>
+
+              <!-- 4. 作品情報 — amber -->
+              <a href="#" onclick="goToPanel(3); return false;" class="group bg-amber-50 border border-amber-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-amber-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-amber-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">作品情報</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">Discography</span>
+                </div>
+              </a>
+
+              <!-- 5. 坂道さんぽ — violet -->
+              <a href="#" onclick="goToPanel(4); return false;" class="group bg-violet-50 border border-violet-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-violet-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-violet-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">坂道さんぽ</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">YouTube Series</span>
+                </div>
+              </a>
+
+              <!-- 6. ショップ — cyan -->
+              <a href="#" onclick="goToPanel(5); return false;" class="group bg-cyan-50 border border-cyan-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-cyan-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-cyan-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">ショップ</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">Official Goods</span>
+                </div>
+              </a>
+
+              <!-- 7. ファンクラブ — pink -->
+              <a href="#" onclick="goToPanel(6); return false;" class="group bg-pink-50 border border-pink-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-pink-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-pink-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">ファンクラブ</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">Okadalino</span>
+                </div>
+              </a>
+
+              <!-- 8. お問い合わせ — orange -->
+              <a href="#" onclick="goToPanel(7); return false;" class="group bg-orange-50 border border-orange-200/60 rounded-lg px-3 py-2 flex items-center gap-2.5 transition-all duration-300 hover:bg-orange-100 hover:shadow-md hover:-translate-y-0.5">
+                <div class="shrink-0 w-7 h-7 bg-orange-500/10 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-navy-800 font-heading font-bold text-[13px] tracking-wide block leading-tight">お問い合わせ</span>
+                  <span class="text-navy-500 text-[10px] tracking-[0.08em]">Contact</span>
+                </div>
+              </a>
+
+            </div>
+
+
+            <!-- ===== Instagram Profile Embed (自動更新・手動作業不要) ===== -->
+            <div id="instagramTopic" class="mt-3 lg:mt-3 rounded-xl overflow-hidden shadow-md panel-content delay-3 relative">
+              <!-- Instagram gradient accent bar (top) -->
+              <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 z-10"></div>
+              <!-- Custom profile header (no dot issue, clean display) -->
+              <div class="bg-white px-3.5 pt-4 pb-2.5">
+                <div class="flex items-center gap-3">
+                  <div class="w-14 h-14 rounded-full overflow-hidden border-2 shrink-0 bg-gray-100" style="border-color: #c13584;">
+                    <img src="images/profile.png" alt="okadayuta.official" class="w-full h-full object-cover">
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-[13px] font-bold text-navy-800 leading-tight">okadayuta.official</p>
+                    <p class="text-[11px] text-navy-600 leading-tight mt-0.5">オカダユータ【OFFICIAL】</p>
+                    <div class="flex items-center gap-3 mt-1.5">
+                      <span class="text-[11px] text-navy-500"><strong class="text-navy-700 font-bold" id="ig-posts">187</strong> 投稿</span>
+                      <span class="text-[11px] text-navy-500"><strong class="text-navy-700 font-bold" id="ig-followers">1,579</strong> フォロワー</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Post grid from iframe (offset to show only images) -->
+              <div class="relative overflow-hidden bg-white" style="height: 115px;">
+                <iframe
+                  src="https://www.instagram.com/okadayuta.official/embed/"
+                  class="absolute border-0"
+                  style="top: -148px; left: -1px; width: calc(100% + 2px); height: 800px;"
+                  scrolling="no"
+                  allowtransparency="true"
+                ></iframe>
+              </div>
+              <!-- Bottom bar: account name + follow link -->
+              <a href="https://www.instagram.com/okadayuta.official/" target="_blank" rel="noopener noreferrer" class="relative z-20 flex items-center justify-between px-3.5 py-2 bg-gradient-to-r from-pink-50 to-purple-50 hover:from-pink-100 hover:to-purple-100 transition-colors group border-t border-pink-100/50">
+                <div class="flex items-center gap-2">
+                  <div class="w-5 h-5 rounded-md bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                  </div>
+                  <span class="text-navy-700 text-[11px] font-bold">@okadayuta.official</span>
+                </div>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-[9px] font-bold rounded-full group-hover:from-pink-600 group-hover:to-purple-600 transition-all shadow-sm">
+                  <span>Instagramを見る</span>
+                  <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </span>
+              </a>
+            </div>
+
+            <!-- ===== 坂道さんぽ Topic Card ===== -->
+            <a href="#" onclick="goToPanel(4); return false;" class="block mt-3 lg:mt-3 group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 panel-content delay-3">
+              <div class="relative h-[140px] lg:h-[150px] overflow-hidden">
+                <img src="https://img.youtube.com/vi/x-2hWXilBgs/hqdefault.jpg" alt="坂道さんぽ 最新エピソード" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <!-- Play icon -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-red-600/90 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 shadow-lg">
+                  <svg class="w-4.5 h-4.5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+                </div>
+                <!-- Episode badge -->
+                <div class="absolute top-2.5 left-2.5">
+                  <span class="inline-block px-2 py-0.5 bg-fuchsia-500 text-white text-[9px] font-bold tracking-wider rounded-full shadow-lg uppercase">YouTube Series</span>
+                </div>
+                <!-- Text overlay -->
+                <div class="absolute bottom-0 left-0 right-0 p-3 lg:p-4">
+                  <h3 class="text-white font-heading font-bold text-sm lg:text-[15px] leading-snug mb-0.5">坂道さんぽ</h3>
+                  <p class="text-white/60 text-[11px] leading-relaxed">神戸の坂道をめぐる散歩動画 — #19 配信中</p>
+                </div>
+                <!-- Arrow indicator -->
+                <div class="absolute bottom-3 right-3 w-7 h-7 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/25 transition-colors">
+                  <svg class="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+              </div>
+            </a>
+
+            <!-- ===== あすてんラジオ (Podcast) ミニカード ===== -->
+            <a href="https://www.youtube.com/channel/UCguNWZ-36gytTNeyYV6eCdA" target="_blank" rel="noopener noreferrer" class="block mt-2 lg:mt-3 panel-content delay-3 group">
+              <div class="rounded-2xl overflow-hidden shadow-md relative hover:shadow-lg transition-all hover:-translate-y-0.5" style="height: 100px;">
+                <!-- Background: blue sky -->
+                <img src="images/unnamed.jpg" alt="明日天気になぁれ" class="absolute inset-0 w-full h-full object-cover">
+                <!-- Soft overlay for text readability -->
+                <div class="absolute inset-0 bg-gradient-to-r from-white/70 via-white/40 to-transparent"></div>
+                <!-- Circular photo (right side) -->
+                <div class="absolute right-10 top-1/2 -translate-y-1/2 z-10 w-[72px] h-[72px] rounded-full overflow-hidden shadow-lg" style="box-shadow: 0 2px 12px rgba(56,189,248,0.2), 0 0 0 2.5px rgba(255,255,255,0.6);">
+                  <img src="images/unnamed_(2).jpg" alt="オカダユータ" class="w-full h-full object-cover object-top">
+                </div>
+                <!-- Text content -->
+                <div class="relative z-10 h-full flex items-center pl-4 pr-28">
+                  <div class="flex-1 min-w-0">
+                    <span class="text-gray-500 text-[9px] font-bold tracking-[0.2em] uppercase leading-none">Podcast</span>
+                    <p class="flex items-baseline gap-1.5 mt-1">
+                      <span class="font-heading font-bold text-[15px] leading-none" style="background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #0ea5e9, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">明日天気になぁれ</span>
+                      <span class="text-gray-400 text-[10px] font-bold tracking-wider italic" style="font-family: 'Cormorant Garamond', serif;">Archives</span>
+                    </p>
+                    <p class="text-gray-500 text-[10.5px] leading-snug mt-1">オカダユータがひたすら喋り続ける<br>ほっこり系ポッドキャスト 全104回</p>
+                  </div>
+                </div>
+                <!-- Arrow button (absolute right-bottom) -->
+                <div class="absolute right-3 bottom-3 z-20 shrink-0 w-7 h-7 rounded-full bg-white/60 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/80 transition-colors shadow-sm">
+                  <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+              </div>
+            </a>
+
+            <!-- ===== Simple SNS Icons ===== -->
+            <!-- 順番: LINE → Instagram → YouTube → X → Music → note -->
+            <div class="flex items-center justify-center gap-3 mt-2 panel-content delay-3">
+              <a href="https://lin.ee/rbAJhbw" target="_blank" rel="noopener noreferrer" class="w-11 h-11 flex items-center justify-center rounded-full bg-[#06C755]/15 text-[#06C755] hover:bg-[#06C755] hover:text-white hover:shadow-lg hover:shadow-[#06C755]/30 transition-all duration-300" aria-label="LINE">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"></path></svg>
+              </a>
+              <a href="https://www.instagram.com/okadayuta.official/" target="_blank" rel="noopener noreferrer" class="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-tr from-amber-200/60 via-pink-200/60 to-purple-200/60 text-pink-500 hover:from-amber-400 hover:via-pink-500 hover:to-purple-600 hover:text-white hover:shadow-lg hover:shadow-pink-400/30 transition-all duration-300" aria-label="Instagram">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+              </a>
+              <a href="https://www.youtube.com/channel/UCoUMlbOsdQvemU-cl_H_vMw" target="_blank" rel="noopener noreferrer" class="w-11 h-11 flex items-center justify-center rounded-full bg-red-100 hover:bg-red-600 hover:text-white text-red-500 transition-all duration-300" aria-label="YouTube">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+              </a>
+              <a href="https://x.com/yuta129" target="_blank" rel="noopener noreferrer" class="w-11 h-11 flex items-center justify-center rounded-full bg-navy-100 hover:bg-navy-800 hover:text-white text-navy-500 transition-all duration-300" aria-label="X">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+              </a>
+              <a href="https://www.tunecore.co.jp/artists/okadayuta" target="_blank" rel="noopener noreferrer" class="w-11 h-11 flex items-center justify-center rounded-full bg-fuchsia-100 hover:bg-gradient-to-br hover:from-fuchsia-400 hover:to-fuchsia-500 hover:text-white text-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-400/30 transition-all duration-300" aria-label="Music">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+              </a>
+              <a href="https://note.com/okadayuta" target="_blank" rel="noopener noreferrer" class="w-11 h-11 flex items-center justify-center rounded-full bg-[#41C9B4]/15 text-[#41C9B4] hover:bg-[#41C9B4] hover:text-white hover:shadow-lg hover:shadow-[#41C9B4]/30 transition-all duration-300" aria-label="note">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 3h-15A1.5 1.5 0 003 4.5v15A1.5 1.5 0 004.5 21h15a1.5 1.5 0 001.5-1.5v-15A1.5 1.5 0 0019.5 3zM17 8.4H7V7h10v1.4zm0 3.1H7v-1.4h10v1.4zm-3.5 3.1H7V13.2h6.5v1.4z"></path></svg>
+              </a>
+            </div>
+
+            <!-- Scroll hint (desktop only) -->
+            <div class="hidden lg:flex items-center justify-center gap-3 mt-2 panel-content delay-3">
+              <div class="w-6 h-px bg-navy-500"></div>
+              <span class="text-navy-600 text-[9px] tracking-[0.3em] uppercase" style="font-family: 'Cormorant Garamond', serif;">Scroll to explore</span>
+              <div class="w-6 h-px bg-navy-500"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 1: LIVE SCHEDULE ===== -->
+    <section class="h-panel bg-navy-50/50" id="m-live" data-panel="1">
+      <span class="vertical-title">Live &amp; Schedule</span>
+      <span class="section-number">01</span>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 pb-20 lg:pb-24">
+        <div class="w-full max-w-4xl">
+          <div class="mb-6 panel-content">
+            <p class="text-terracotta-500 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Live &amp; Schedule</p>
+            <h2 class="font-heading font-black text-2xl sm:text-3xl text-navy-800 tracking-wide mb-3">ライブ情報</h2>
+            <div class="section-divider"></div>
+          </div>
+
+          <!-- Live cards — dynamically loaded from Google Sheets -->
+          <div id="liveScheduleContainer" class="space-y-2.5 panel-content delay-1">
+            <!-- Loading state -->
+            <div id="liveLoading" class="text-center py-8">
+              <div class="inline-block w-6 h-6 border-2 border-navy-200 border-t-terracotta-500 rounded-full animate-spin mb-3"></div>
+              <p class="text-navy-400 text-xs">ライブ情報を読み込み中...</p>
+            </div>
+          </div>
+
+          <!-- もっと見る / 閉じる ボタン（JSで制御） -->
+          <div id="liveToggleWrap" class="hidden pt-2 panel-content delay-1">
+            <button id="liveToggleBtn" onclick="toggleLiveCards()" class="text-terracotta-500 hover:text-terracotta-700 font-bold text-sm flex items-center gap-1 transition-colors">
+              <span id="liveToggleText">もっと見る</span>
+              <svg id="liveToggleIcon" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+          </div>
+
+          <!-- error fallback -->
+          <div class="pt-2 panel-content delay-2">
+            <p id="liveError" class="text-navy-400 text-xs hidden">※ スプレッドシートから読み込めませんでした。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 2: PROFILE ===== -->
+    <section class="h-panel bg-white" id="m-profile" data-panel="2">
+      <span class="vertical-title">Profile</span>
+      <span class="section-number">02</span>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 pb-20 lg:pb-24">
+        <div class="w-full max-w-5xl">
+          <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-14">
+            <!-- Profile Photo -->
+            <div class="shrink-0 w-full max-w-[280px] lg:max-w-[320px] panel-content">
+              <div class="aspect-[3/4] rounded-3xl overflow-hidden shadow-xl shadow-navy-200/30">
+                <img
+                  src="images/profile.png"
+                  alt="オカダユータ プロフィール写真"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <!-- Profile Text -->
+            <div class="flex-1 inner-scroll panel-content delay-1">
+              <div class="mb-4">
+                <p class="text-rose-500 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Profile</p>
+                <h2 class="font-heading font-black text-2xl text-navy-800 mb-1">
+                  オカダユータ <span class="text-base font-bold text-navy-400 ml-2">Okada Yuta</span>
+                </h2>
+                <p class="text-rose-500 text-sm font-bold tracking-wider2 mb-4">Singer-Songwriter ／ 1月29日生まれ</p>
+                <div class="section-divider mb-6"></div>
+              </div>
+
+              <div class="space-y-3 text-navy-600 text-sm leading-loose max-w-xl">
+                <p>兵庫県神戸市出身・在住。神戸市坂アンバサダー。</p>
+                <p>
+                  6年間の社会人経験を経て、消えない音楽への情熱を胸にゼロからスタートを切ったシンガーソングライター。
+                  ストリートライブで磨かれた力強い歌声と、心にまっすぐ届くあたたかいメッセージで、
+                  幅広い年齢層から共感と支持を集めている。
+                </p>
+                <p>
+                  楽曲提供アーティストはSUPER EIGHT（「凛」＝フジテレビ東京五輪・北京冬季五輪テーマソング）、
+                  Hey!Say!JUMP（「はじまりのメロディ」「愛よ、僕を導いてゆけ」）、
+                  川畑要（CHEMISTRY）、チャン・グンソク、上田竜也（KAT-TUN）など多数。
+                  企業タイアップとしてNTT西日本 企業広告ソング「つなぐ」、JR西日本ヴィアインホテルズ ブランディングムービーソング「Looking for」、
+                  塩谷建設 TVCM「New world」、奈良県 観光事業PRタイアップソング「とこしえの詩」、西鉄バス TVCM「夢と呼ぶ」など実績多数。
+                </p>
+                <p>
+                  神戸に軸足を置きながら、奈良・東京・水戸と全国へ活動を展開中。
+                  「聴いてくれた人の心に、小さな火を灯したい」——
+                  その想いを込めた歌が、今日もどこかの街で響いている。
+                </p>
+              </div>
+
+              <!-- SEO tags (hidden) -->
+              <div class="sr-only">
+                <span>神戸市出身・在住</span>
+                <span>神戸市坂アンバサダー</span>
+                <span>楽曲提供多数</span>
+                <span>ストリートライブ出身</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 3: DISCOGRAPHY ===== -->
+    <section class="h-panel bg-navy-50/50" id="m-discography" data-panel="3">
+      <span class="vertical-title">Discography</span>
+      <span class="section-number">03</span>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 pb-20 lg:pb-24">
+        <div class="w-full max-w-6xl">
+          <div class="mb-4 panel-content">
+            <p class="text-amber-600 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Discography</p>
+            <h2 class="font-heading font-black text-2xl sm:text-3xl text-navy-800 tracking-wide mb-3">ディスコグラフィー</h2>
+            <div class="section-divider"></div>
+          </div>
+
+          <!-- 2-column layout: Left = RISE UP feature, Right = Past + Credits -->
+          <div class="flex flex-col lg:flex-row gap-5">
+
+            <!-- LEFT: Latest Release RISE UP -->
+            <div class="lg:w-[45%] shrink-0 panel-content delay-1">
+              <div class="bg-white rounded-2xl overflow-hidden shadow-lg shadow-navy-100/40 h-full">
+                <div class="flex flex-col h-full">
+                  <div class="shrink-0">
+                    <div class="aspect-[16/9] lg:aspect-[4/3]">
+                      <img
+                        src="images/jacket-riseup.png"
+                        alt="EP「RISE UP」ジャケット画像"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div class="p-5 flex-1 flex flex-col justify-center">
+                    <span class="inline-block text-[10px] font-bold tracking-[0.3em] text-terracotta-500 bg-terracotta-50 px-3 py-1 rounded-full mb-2 w-fit uppercase">Latest Release</span>
+                    <h3 class="font-heading font-black text-lg text-navy-800 mb-1">RISE UP</h3>
+                    <p class="text-navy-400 text-[11px] mb-2">2025.11.28 Release ／ EP（全3曲）</p>
+                    <ol class="text-navy-500 text-[11px] mb-3 space-y-0.5 list-decimal list-inside">
+                      <li>僕の町（BOKUNOMACHI）</li>
+                      <li>RISE UP</li>
+                      <li>ありがとうの花束を</li>
+                    </ol>
+                    <div class="flex flex-wrap gap-2">
+                      <a href="https://linkco.re/PmnhnaMy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-1.5 bg-navy-700 hover:bg-navy-800 text-white font-bold text-[10px] tracking-wider2 rounded-full transition-colors">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        配信で聴く
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Past Releases + Songwriting Credits -->
+            <div class="flex-1 flex flex-col gap-4">
+              <!-- Past Releases (4 albums in a row) -->
+              <div class="grid grid-cols-4 gap-3 panel-content delay-2">
+                <a href="https://linkco.re/0AsUyHDR" target="_blank" rel="noopener noreferrer" class="card-hover group">
+                  <div class="aspect-square rounded-xl overflow-hidden mb-1.5 shadow-md shadow-navy-100/30">
+                    <img src="images/jacket-milestone.png" alt="Milestone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                  <p class="font-heading font-bold text-[11px] text-navy-800">Milestone</p>
+                  <p class="text-navy-400 text-[9px]">2024 ／ EP</p>
+                </a>
+                <a href="https://linkco.re/dQuf6BCP" target="_blank" rel="noopener noreferrer" class="card-hover group">
+                  <div class="aspect-square rounded-xl overflow-hidden mb-1.5 shadow-md shadow-navy-100/30">
+                    <img src="images/jacket-lookingfor.png" alt="Looking for" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                  <p class="font-heading font-bold text-[11px] text-navy-800">Looking for</p>
+                  <p class="text-navy-400 text-[9px]">2023 ／ EP</p>
+                </a>
+                <a href="https://linkco.re/cD5UbdNq" target="_blank" rel="noopener noreferrer" class="card-hover group">
+                  <div class="aspect-square rounded-xl overflow-hidden mb-1.5 shadow-md shadow-navy-100/30">
+                    <img src="images/jacket-baton.jpg" alt="Baton" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                  <p class="font-heading font-bold text-[11px] text-navy-800">Baton</p>
+                  <p class="text-navy-400 text-[9px]">2021 ／ EP</p>
+                </a>
+                <a href="https://linkco.re/QTxfPaF4" target="_blank" rel="noopener noreferrer" class="card-hover group">
+                  <div class="aspect-square rounded-xl overflow-hidden mb-1.5 shadow-md shadow-navy-100/30">
+                    <img src="images/jacket-genten.jpg" alt="GENTEN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                  <p class="font-heading font-bold text-[11px] text-navy-800">GENTEN</p>
+                  <p class="text-navy-400 text-[9px]">2019 ／ EP</p>
+                </a>
+              </div>
+
+              <!-- More Releases -->
+              <div class="bg-white rounded-xl p-4 border border-navy-100 panel-content delay-3">
+                <h3 class="font-heading font-bold text-xs text-navy-800 mb-2">その他のリリース</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-1 text-[11px] text-navy-600">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">希望風</p>
+                      <p class="text-navy-400 text-[9px]">アルバム</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">プレイリスト</p>
+                      <p class="text-navy-400 text-[9px]">ミニアルバム</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">とこしえの詩</p>
+                      <p class="text-navy-400 text-[9px]">マキシシングル</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">君をさがしに</p>
+                      <p class="text-navy-400 text-[9px]">マキシシングル</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">シリウス</p>
+                      <p class="text-navy-400 text-[9px]">マキシシングル</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">オムライスの歌</p>
+                      <p class="text-navy-400 text-[9px]">マキシシングル</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">線香花火 / 夏空</p>
+                      <p class="text-navy-400 text-[9px]">シングル</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">聖なる夜にあたたかなスープを</p>
+                      <p class="text-navy-400 text-[9px]">シングル</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-terracotta-500">♪</span>
+                    <div>
+                      <p class="font-bold text-navy-800 leading-tight">ほほえみ</p>
+                      <p class="text-navy-400 text-[9px]">シングル</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2 pt-2 border-t border-navy-100">
+                  <p class="text-[10px] text-navy-500 font-bold mb-0.5">Blu-ray</p>
+                  <p class="text-navy-600 text-[11px]">Road to Baton ／ Re:union（ライブBlu-ray）</p>
+                </div>
+              </div>
+
+              <!-- Songwriting Credits -->
+              <div class="bg-navy-50/80 rounded-xl p-4 border border-navy-100 panel-content delay-4">
+                <h3 class="font-heading font-bold text-xs text-navy-800 mb-2">主な楽曲提供作品</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-1.5 text-[11px] text-navy-600">
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-terracotta-500 mt-px">♪</span>
+                    <div><p class="font-bold text-navy-800">SUPER EIGHT「凛」</p><p class="text-[9px] text-navy-400">フジテレビ東京五輪・北京冬季五輪テーマソング</p></div>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-terracotta-500 mt-px">♪</span>
+                    <div><p class="font-bold text-navy-800">Hey!Say!JUMP「愛よ、僕を導いてゆけ」「ただ前へ」他</p></div>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-terracotta-500 mt-px">♪</span>
+                    <div><p class="font-bold text-navy-800">チャン・グンソク「Day by day」他</p></div>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-terracotta-500 mt-px">♪</span>
+                    <div><p class="font-bold text-navy-800">NTT西日本「つなぐ」</p><p class="text-[9px] text-navy-400">企業広告ソング</p></div>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-terracotta-500 mt-px">♪</span>
+                    <div><p class="font-bold text-navy-800">JR西日本 ヴィアインホテルズ「Looking for」</p><p class="text-[9px] text-navy-400">ブランディングムービーソング</p></div>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-terracotta-500 mt-px">♪</span>
+                    <div><p class="font-bold text-navy-800">奈良県「とこしえの詩」</p><p class="text-[9px] text-navy-400">観光事業PRタイアップソング</p></div>
+                  </div>
+                </div>
+                <p class="text-[9px] text-navy-400 mt-2">ほか多数</p>
+              </div>
+
+              <!-- CTA -->
+              <div class="panel-content delay-5">
+                <a href="https://www.okadayuta.com/discography" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2 border-2 border-navy-700 text-navy-700 font-bold text-[11px] tracking-wider2 rounded-full hover:bg-navy-700 hover:text-white transition-all">
+                  ディスコグラフィー一覧
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 4: 坂道さんぽ (YouTube Series) ===== -->
+    <section class="h-panel bg-white relative overflow-hidden" id="m-sakamichi" data-panel="4">
+      <span class="vertical-title">坂道さんぽ</span>
+      <span class="section-number">04</span>
+
+      <!-- Decorative -->
+      <div class="absolute top-20 right-20 w-72 h-72 bg-violet-100/50 rounded-full blur-3xl" aria-hidden="true"></div>
+      <div class="absolute bottom-20 left-10 w-56 h-56 bg-violet-50/40 rounded-full blur-3xl" aria-hidden="true"></div>
+
+      <div id="sakamichiScrollContainer" class="h-full overflow-hidden px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-8 pb-20 lg:pb-24 relative z-10">
+        <div class="w-full max-w-4xl mx-auto">
+          <!-- Header -->
+          <div class="mb-5 panel-content text-center">
+            <p class="text-violet-500 text-xs font-bold tracking-[0.3em] uppercase mb-2">YouTube Series</p>
+            <h2 class="font-heading font-black text-2xl sm:text-3xl text-navy-800 tracking-wide mb-3">坂道さんぽ</h2>
+            <div class="section-divider mx-auto"></div>
+          </div>
+
+          <!-- Main: Video + Description (compact) -->
+          <div class="flex flex-col lg:flex-row gap-5 items-center panel-content delay-1">
+            <!-- Video Thumbnail — #1 国魂ストレート坂 -->
+            <a href="https://www.youtube.com/watch?v=0GB7-KkTgoU" target="_blank" rel="noopener noreferrer" class="lg:w-[50%] shrink-0 block">
+              <div class="aspect-video rounded-xl overflow-hidden shadow-lg shadow-navy-200/30 bg-navy-100 relative group cursor-pointer">
+                <img
+                  src="https://img.youtube.com/vi/0GB7-KkTgoU/hqdefault.jpg"
+                  alt="坂道さんぽ #1 神戸市灘区 国魂ストレート坂"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-14 h-14 bg-red-600/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+                  </div>
+                </div>
+                <div class="absolute top-2 left-2">
+                  <span class="inline-block px-2 py-0.5 bg-black/60 text-white text-[9px] font-bold rounded">#1</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Description (compact) -->
+            <div class="flex-1">
+              <p class="text-navy-600 text-sm leading-relaxed mb-4">
+                神戸市坂アンバサダー<br />
+                オカダユータが神戸の美しい坂道を歩きながら、<br class="hidden lg:block" />
+                街の魅力と音楽をお届けするYouTubeシリーズ。<br />
+                ぜひチャンネル登録・高評価・コメントをお願いします!
+              </p>
+              <div class="space-y-2 mb-4">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 bg-violet-100 rounded flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                  </div>
+                  <span class="text-navy-700 text-xs font-medium">神戸の坂道をめぐる散歩動画</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 bg-violet-100 rounded flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                  </div>
+                  <span class="text-navy-700 text-xs font-medium">坂道×音楽のオリジナルコンテンツ</span>
+                </div>
+              </div>
+              <a href="https://www.youtube.com/channel/UCoUMlbOsdQvemU-cl_H_vMw?sub_confirmation=1" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-[11px] tracking-wider rounded-full shadow-lg shadow-red-600/20 transition-all hover:shadow-xl hover:-translate-y-0.5">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                チャンネル登録
+              </a>
+            </div>
+          </div>
+
+          <!-- ===== 坂道さんぽ 動画ギャラリー ===== -->
+          <div class="mt-6 panel-content delay-2">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-navy-800 font-heading font-bold text-sm flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                エピソード一覧
+              </h3>
+              <button id="sakamichiToggleBtn" onclick="toggleSakamichiVideos()" class="hidden items-center gap-1 px-3 py-1.5 text-violet-500 hover:bg-violet-50 font-bold text-[11px] tracking-wider rounded-full transition-all">
+                <span id="sakamichiToggleText">すべて見る</span>
+                <svg id="sakamichiToggleIcon" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+            </div>
+            <!-- Latest 6 videos (3×2, always visible) -->
+            <div id="sakamichi-grid" class="grid grid-cols-3 gap-2.5">
+            </div>
+            <!-- All remaining videos (3 columns, revealed on toggle) -->
+            <div id="sakamichi-grid-more" class="grid grid-cols-3 gap-2.5 mt-2.5 hidden">
+            </div>
+            <!-- Spacer for bottom nav bar when expanded -->
+            <div id="sakamichiSpacer" class="hidden h-16"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 5: STORE (Official Goods) ===== -->
+    <section class="h-panel bg-gradient-to-b from-cyan-50/50 to-white relative overflow-hidden" id="m-store" data-panel="5">
+      <span class="vertical-title">Store</span>
+      <span class="section-number">05</span>
+
+      <!-- Decorative -->
+      <div class="absolute top-10 left-20 w-56 h-56 bg-cyan-100/50 rounded-full blur-3xl" aria-hidden="true"></div>
+      <div class="absolute bottom-20 right-10 w-48 h-48 bg-gold-100/40 rounded-full blur-3xl" aria-hidden="true"></div>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 pb-20 lg:pb-24 relative z-10">
+        <div class="w-full max-w-5xl">
+          <div class="mb-5 panel-content text-center">
+            <p class="text-cyan-600 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Official Store</p>
+            <h2 class="font-heading font-black text-2xl sm:text-3xl text-navy-800 tracking-wide mb-3">オフィシャルストア</h2>
+            <div class="section-divider mx-auto"></div>
+          </div>
+
+          <!-- Category Tabs -->
+          <div class="flex justify-center gap-2 mb-5 panel-content delay-1">
+            <button class="store-tab active px-4 py-1.5 text-[11px] font-bold tracking-wider rounded-full transition-all bg-cyan-600 text-white" data-category="cd" onclick="switchStoreCategory('cd')">CD / Blu-ray</button>
+            <button class="store-tab px-4 py-1.5 text-[11px] font-bold tracking-wider rounded-full transition-all bg-navy-100 text-navy-500 hover:bg-navy-200" data-category="goods" onclick="switchStoreCategory('goods')">グッズ</button>
+            <button class="store-tab px-4 py-1.5 text-[11px] font-bold tracking-wider rounded-full transition-all bg-navy-100 text-navy-500 hover:bg-navy-200" data-category="ticket" onclick="switchStoreCategory('ticket')">チケット</button>
+          </div>
+
+          <!-- CD / Blu-ray Category -->
+          <div id="store-cd" class="store-category panel-content delay-2">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-5">
+              <!-- Milestone -->
+              <a href="https://www.okadayuta.com/goods-top" target="_blank" rel="noopener noreferrer" class="card-hover group bg-white rounded-xl p-3 border border-navy-100 shadow-sm">
+                <div class="aspect-square rounded-lg overflow-hidden mb-2">
+                  <img src="images/jacket-milestone.png" alt="Milestone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <span class="text-[9px] font-bold text-red-500 tracking-wider">NEW</span>
+                <p class="font-heading font-bold text-xs text-navy-800">Milestone</p>
+                <p class="text-navy-400 text-[10px]">ミニアルバム</p>
+              </a>
+              <!-- Looking for -->
+              <a href="https://www.okadayuta.com/goods-top" target="_blank" rel="noopener noreferrer" class="card-hover group bg-white rounded-xl p-3 border border-navy-100 shadow-sm">
+                <div class="aspect-square rounded-lg overflow-hidden mb-2">
+                  <img src="images/jacket-lookingfor.png" alt="Looking for" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <p class="font-heading font-bold text-xs text-navy-800">Looking for</p>
+                <p class="text-navy-400 text-[10px]">マキシシングル</p>
+              </a>
+              <!-- Baton -->
+              <a href="https://www.okadayuta.com/goods-top" target="_blank" rel="noopener noreferrer" class="card-hover group bg-white rounded-xl p-3 border border-navy-100 shadow-sm">
+                <div class="aspect-square rounded-lg overflow-hidden mb-2">
+                  <img src="images/jacket-baton.jpg" alt="Baton" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <p class="font-heading font-bold text-xs text-navy-800">Baton</p>
+                <p class="text-navy-400 text-[10px]">マキシシングル</p>
+              </a>
+              <!-- GENTEN -->
+              <a href="https://www.okadayuta.com/goods-top" target="_blank" rel="noopener noreferrer" class="card-hover group bg-white rounded-xl p-3 border border-navy-100 shadow-sm">
+                <div class="aspect-square rounded-lg overflow-hidden mb-2">
+                  <img src="images/jacket-genten.jpg" alt="GENTEN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <p class="font-heading font-bold text-xs text-navy-800">GENTEN</p>
+                <p class="text-navy-400 text-[10px]">マキシシングル</p>
+              </a>
+            </div>
+            <div class="text-center">
+              <a href="https://www.okadayuta.com/goods-top" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-[11px] tracking-wider2 rounded-full shadow-lg shadow-cyan-600/20 transition-all hover:shadow-xl hover:-translate-y-0.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                全商品を見る
+              </a>
+            </div>
+          </div>
+
+          <!-- Goods Category -->
+          <div id="store-goods" class="store-category hidden panel-content delay-2">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-5 max-w-2xl mx-auto">
+              <div class="bg-white rounded-xl p-4 border border-navy-100 shadow-sm text-center">
+                <div class="aspect-square rounded-lg bg-navy-50 mb-3 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
+                <p class="font-heading font-bold text-xs text-navy-700">Tシャツ</p>
+                <p class="text-navy-400 text-[10px]">Coming Soon</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-navy-100 shadow-sm text-center">
+                <div class="aspect-square rounded-lg bg-navy-50 mb-3 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <p class="font-heading font-bold text-xs text-navy-700">タオル</p>
+                <p class="text-navy-400 text-[10px]">Coming Soon</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border border-navy-100 shadow-sm text-center">
+                <div class="aspect-square rounded-lg bg-navy-50 mb-3 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-navy-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                </div>
+                <p class="font-heading font-bold text-xs text-navy-700">限定グッズ</p>
+                <p class="text-navy-400 text-[10px]">Coming Soon</p>
+              </div>
+            </div>
+            <p class="text-navy-400 text-xs text-center">グッズは近日追加予定です。お楽しみに！</p>
+          </div>
+
+          <!-- Ticket Category -->
+          <div id="store-ticket" class="store-category hidden panel-content delay-2">
+            <div class="max-w-md mx-auto bg-white rounded-xl p-6 border border-navy-100 shadow-sm text-center">
+              <svg class="w-12 h-12 text-navy-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+              <p class="font-heading font-bold text-sm text-navy-700 mb-1">チケット販売</p>
+              <p class="text-navy-400 text-xs leading-relaxed">ライブチケットの先行販売・FC限定チケットなどを<br />取り扱い予定です。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 6: FAN CLUB — Okadalino ===== -->
+    <section class="h-panel bg-gradient-to-b from-pink-50/50 to-white relative overflow-hidden" id="m-fanclub" data-panel="6">
+      <span class="vertical-title">Fan Club</span>
+      <span class="section-number">06</span>
+
+      <!-- Decorative -->
+      <div class="absolute top-10 right-20 w-64 h-64 bg-pink-100/60 rounded-full blur-3xl" aria-hidden="true"></div>
+      <div class="absolute bottom-10 left-20 w-56 h-56 bg-terracotta-100/40 rounded-full blur-3xl" aria-hidden="true"></div>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 pb-20 lg:pb-24 relative z-10">
+        <div class="w-full max-w-4xl">
+          <div class="mb-5 panel-content text-center">
+            <p class="text-pink-500 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Official Fan Club</p>
+            <h2 class="font-heading font-black text-3xl sm:text-4xl text-navy-800 tracking-wide mb-1" style="font-family: 'Cormorant Garamond', serif; font-style: italic;">Okadalino</h2>
+            <p class="text-navy-400 text-xs tracking-wider2 mb-3">〜 オカダリーノ 〜</p>
+            <div class="section-divider mx-auto"></div>
+          </div>
+
+          <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 sm:p-8 border border-pink-100 shadow-lg shadow-pink-100/20 panel-content delay-1">
+            <p class="text-navy-600 text-sm leading-loose mb-5 text-center">
+              ファンの皆さまとオカダユータをつなぐ特別なコミュニティ。<br class="hidden sm:inline" />
+              ここでしか味わえない体験を、あなたに。
+            </p>
+
+            <!-- 6 benefits grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+              <div class="bg-pink-50/50 rounded-xl p-3 border border-pink-100 text-center">
+                <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"></path></svg>
+                </div>
+                <h4 class="font-heading font-bold text-xs text-navy-800 mb-0.5">会員カード発行</h4>
+                <p class="text-navy-500 text-[10px] leading-relaxed">あなただけの会員番号入り</p>
+              </div>
+              <div class="bg-pink-50/50 rounded-xl p-3 border border-pink-100 text-center">
+                <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </div>
+                <h4 class="font-heading font-bold text-xs text-navy-800 mb-0.5">FC限定サイト</h4>
+                <p class="text-navy-500 text-[10px] leading-relaxed">動画・写真を毎月2回更新</p>
+              </div>
+              <div class="bg-pink-50/50 rounded-xl p-3 border border-pink-100 text-center">
+                <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"></path></svg>
+                </div>
+                <h4 class="font-heading font-bold text-xs text-navy-800 mb-0.5">弾き語りライブ</h4>
+                <p class="text-navy-500 text-[10px] leading-relaxed">FC限定の特別ライブ</p>
+              </div>
+              <div class="bg-pink-50/50 rounded-xl p-3 border border-pink-100 text-center">
+                <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <h4 class="font-heading font-bold text-xs text-navy-800 mb-0.5">限定イベント</h4>
+                <p class="text-navy-500 text-[10px] leading-relaxed">生誕祭・浴衣祭・クリスマス</p>
+              </div>
+              <div class="bg-pink-50/50 rounded-xl p-3 border border-pink-100 text-center">
+                <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+                </div>
+                <h4 class="font-heading font-bold text-xs text-navy-800 mb-0.5">FC限定BBQ</h4>
+                <p class="text-navy-500 text-[10px] leading-relaxed">ファン同士の親睦も深まる</p>
+              </div>
+              <div class="bg-pink-50/50 rounded-xl p-3 border border-pink-100 text-center">
+                <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                  <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                </div>
+                <h4 class="font-heading font-bold text-xs text-navy-800 mb-0.5">優先チケット</h4>
+                <p class="text-navy-500 text-[10px] leading-relaxed">先行販売・限定グッズも</p>
+              </div>
+            </div>
+
+            <!-- Price + CTA -->
+            <div class="text-center">
+              <div class="inline-block bg-navy-50 rounded-xl px-6 py-3 mb-4">
+                <p class="text-navy-400 text-[10px] mb-1">新規入会費 2,000円 ＋ 年会費 5,000円</p>
+                <p class="font-heading font-black text-xl text-navy-800">合計 <span class="text-pink-500">7,000</span>円<span class="text-sm font-bold text-navy-500">（税込）</span></p>
+              </div>
+              <br />
+              <a href="https://www.okadayuta.com/fanclub" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold text-xs tracking-wider2 rounded-full shadow-lg shadow-pink-500/20 transition-all hover:shadow-xl hover:-translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                Okadalinoに入会する
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 7: CONTACT + FOOTER ===== -->
+    <section class="h-panel bg-navy-50/50" id="m-contact" data-panel="7">
+      <span class="vertical-title">Contact</span>
+      <span class="section-number">07</span>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 pb-20 lg:pb-24">
+        <div class="w-full max-w-4xl">
+          <!-- Header -->
+          <div class="text-center mb-8 lg:mb-10 panel-content">
+            <p class="text-orange-500 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Contact</p>
+            <h2 class="font-heading font-black text-xl sm:text-2xl text-navy-800 tracking-wide mb-3">お問い合わせ</h2>
+            <div class="section-divider mx-auto"></div>
+          </div>
+
+          <!-- 2-column layout -->
+          <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-stretch">
+            <!-- Left: Contact Form (3/5) -->
+            <div class="lg:col-span-3 panel-content delay-1 flex">
+              <form id="contactForm" class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-navy-100 shadow-lg shadow-navy-100/20 flex flex-col w-full">
+                <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label class="block text-navy-700 text-[11px] font-bold tracking-wider mb-1.5">お名前 <span class="text-terracotta-500">*</span></label>
+                    <input type="text" required placeholder="山田 太郎"
+                      class="w-full px-4 py-2.5 bg-navy-50/50 border border-navy-200 rounded-lg text-sm text-navy-800 placeholder-navy-300 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400/30 transition-colors" />
+                  </div>
+                  <div>
+                    <label class="block text-navy-700 text-[11px] font-bold tracking-wider mb-1.5">メールアドレス <span class="text-terracotta-500">*</span></label>
+                    <input type="email" required placeholder="example@email.com"
+                      class="w-full px-4 py-2.5 bg-navy-50/50 border border-navy-200 rounded-lg text-sm text-navy-800 placeholder-navy-300 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400/30 transition-colors" />
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <label class="block text-navy-700 text-[11px] font-bold tracking-wider mb-1.5">お問い合わせ種別</label>
+                  <select class="w-full px-4 py-2.5 bg-navy-50/50 border border-navy-200 rounded-lg text-sm text-navy-800 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400/30 transition-colors appearance-none" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 20 20%22><path stroke=%22%236b7280%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221.5%22 d=%22M6 8l4 4 4-4%22/></svg>'); background-position: right 12px center; background-repeat: no-repeat; background-size: 16px;">
+                    <option value="">選択してください</option>
+                    <option value="live">ライブ予約</option>
+                    <option value="booking">出演依頼・ブッキング</option>
+                    <option value="media">取材・メディア出演</option>
+                    <option value="collab">コラボ・タイアップ</option>
+                    <option value="music">楽曲制作依頼</option>
+                    <option value="other">その他</option>
+                  </select>
+                </div>
+                <div class="mb-5 flex-1 flex flex-col">
+                  <label class="block text-navy-700 text-[11px] font-bold tracking-wider mb-1.5">メッセージ <span class="text-terracotta-500">*</span></label>
+                  <textarea required rows="6" placeholder="お問い合わせ内容をご記入ください"
+                    class="w-full flex-1 px-4 py-2.5 bg-navy-50/50 border border-navy-200 rounded-lg text-sm text-navy-800 placeholder-navy-300 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400/30 transition-colors resize-none"></textarea>
+                </div>
+                <button type="submit"
+                   class="w-full inline-flex items-center justify-center gap-2 px-8 py-3 bg-navy-700 hover:bg-navy-800 text-white font-bold text-xs tracking-wider2 rounded-full transition-colors">
+                  送信する
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </button>
+              </form>
+            </div>
+
+            <!-- Right: Info & Links (2/5) -->
+            <div class="lg:col-span-2 panel-content delay-2">
+              <!-- Quick Contact -->
+              <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-navy-100 shadow-lg shadow-navy-100/20 mb-5">
+                <h3 class="font-heading font-bold text-sm text-navy-800 mb-4 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                  お問い合わせ先
+                </h3>
+                <div class="space-y-3">
+                  <a href="mailto:info@okadayuta.com" class="flex items-center gap-3 group">
+                    <div class="shrink-0 w-9 h-9 rounded-lg bg-navy-100 flex items-center justify-center group-hover:bg-terracotta-500 transition-colors">
+                      <svg class="w-4 h-4 text-navy-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
+                    </div>
+                    <div>
+                      <p class="text-navy-400 text-[10px] tracking-wider">Email</p>
+                      <p class="text-navy-700 text-xs font-bold group-hover:text-terracotta-500 transition-colors">info@okadayuta.com</p>
+                    </div>
+                  </a>
+                  <a href="https://lin.ee/rbAJhbw" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 group">
+                    <div class="shrink-0 w-9 h-9 rounded-lg bg-[#06C755]/10 flex items-center justify-center group-hover:bg-[#06C755] transition-colors">
+                      <svg class="w-4 h-4 text-[#06C755] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"></path></svg>
+                    </div>
+                    <div>
+                      <p class="text-navy-400 text-[10px] tracking-wider">LINE</p>
+                      <p class="text-navy-700 text-xs font-bold group-hover:text-[#06C755] transition-colors">公式LINE</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Response Info -->
+              <div class="bg-terracotta-50/50 rounded-2xl p-5 border border-terracotta-100/50 mb-5">
+                <h3 class="font-heading font-bold text-xs text-navy-800 mb-2 flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  返信について
+                </h3>
+                <p class="text-navy-500 text-[11px] leading-relaxed mb-2">
+                  48時間以内に折り返しご連絡差し上げます。万が一返信がない場合は info@okadayuta.com からの受信許可設定をお願いいたします。
+                </p>
+                <p class="text-navy-400 text-[10px] leading-relaxed">
+                  ※ 内容によってはお返事できかねる場合がございます。
+                </p>
+              </div>
+
+              <!-- ライブ予約について -->
+              <div class="bg-navy-50/80 rounded-2xl p-5 border border-navy-100/50 mb-5">
+                <h3 class="font-heading font-bold text-xs text-navy-800 mb-2 flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                  ライブ予約について
+                </h3>
+                <p class="text-navy-500 text-[10px] leading-relaxed">
+                  ライブご予約の際は、メッセージ欄に以下を明記ください：<br />
+                  <span class="text-navy-600 font-bold">①ライブ開催日 ②お名前(カタカナ) ③人数</span>
+                </p>
+              </div>
+
+              <!-- SNS & Music Links -->
+              <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-navy-100 shadow-sm">
+                <h3 class="font-heading font-bold text-xs text-navy-800 mb-3">SNS & Music</h3>
+                <!-- 順番: Instagram → YouTube → X → Music → note -->
+                <div class="flex items-center justify-between">
+                  <a href="https://www.instagram.com/okadayuta.official/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-navy-100 hover:bg-gradient-to-tr hover:from-amber-400 hover:via-pink-500 hover:to-purple-600 transition-all group" aria-label="Instagram">
+                    <svg class="w-3.5 h-3.5 text-navy-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+                  </a>
+                  <a href="https://www.youtube.com/channel/UCoUMlbOsdQvemU-cl_H_vMw" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-navy-100 hover:bg-red-600 transition-colors group" aria-label="YouTube">
+                    <svg class="w-3.5 h-3.5 text-navy-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                  </a>
+                  <a href="https://x.com/yuta129" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-navy-100 hover:bg-navy-800 transition-colors group" aria-label="X">
+                    <svg class="w-3.5 h-3.5 text-navy-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                  </a>
+                  <a href="https://www.tunecore.co.jp/artists/okadayuta" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-pink-100 hover:bg-gradient-to-br hover:from-pink-400 hover:to-pink-500 transition-all group" aria-label="Music">
+                    <svg class="w-3.5 h-3.5 text-pink-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                  </a>
+                  <a href="https://note.com/okadayuta" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-[#41C9B4]/10 hover:bg-[#41C9B4] transition-colors group" aria-label="note">
+                    <svg class="w-3.5 h-3.5 text-[#41C9B4] group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 3h-15A1.5 1.5 0 003 4.5v15A1.5 1.5 0 004.5 21h15a1.5 1.5 0 001.5-1.5v-15A1.5 1.5 0 0019.5 3zM17 8.4H7V7h10v1.4zm0 3.1H7v-1.4h10v1.4zm-3.5 3.1H7V13.2h6.5v1.4z"></path></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="mt-6 text-center lg:text-left">
+                <p class="text-navy-400 text-[10px] tracking-wider2">&copy; 2026 O.M.E. All Rights Reserved.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== PANEL 8: 公式LINE ===== -->
+    <section class="h-panel bg-gradient-to-b from-navy-50 to-navy-100 relative overflow-hidden" id="m-line" data-panel="8">
+      <span class="vertical-title">Official LINE</span>
+      <span class="section-number">08</span>
+
+      <!-- Decorative -->
+      <div class="absolute top-10 right-10 w-64 h-64 bg-terracotta-200/40 rounded-full blur-3xl" aria-hidden="true"></div>
+      <div class="absolute bottom-10 left-10 w-48 h-48 bg-gold-200/40 rounded-full blur-3xl" aria-hidden="true"></div>
+
+      <div class="h-full flex items-center justify-center px-6 lg:pl-[140px] lg:pr-[100px] pt-16 lg:pt-0 relative z-10">
+        <div class="w-full max-w-3xl">
+          <div class="mb-8 panel-content text-center">
+            <p class="text-terracotta-500 text-xs font-bold tracking-[0.3em] mb-2 uppercase">Official LINE</p>
+            <h2 class="font-heading font-black text-2xl sm:text-3xl text-navy-800 tracking-wide mb-3">
+              公式LINEで<br class="sm:hidden" />最新情報をGET
+            </h2>
+            <div class="section-divider mx-auto"></div>
+          </div>
+
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 sm:p-10 border border-navy-100 shadow-lg shadow-navy-100/20 panel-content delay-1">
+            <p class="text-navy-600 text-sm leading-loose text-center mb-8">
+              オカダユータ公式LINEに登録すると、最新情報・優先案内をいち早くお届けします。
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-5 mb-8">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 w-10 h-10 bg-terracotta-500/20 rounded-xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-heading font-bold text-sm text-navy-800 mb-0.5">リリース速報</h4>
+                  <p class="text-navy-500 text-xs leading-relaxed">新曲情報をいち早くお届け</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 w-10 h-10 bg-terracotta-500/20 rounded-xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-heading font-bold text-sm text-navy-800 mb-0.5">ライブ情報</h4>
+                  <p class="text-navy-500 text-xs leading-relaxed">ライブ情報を真っ先にお届け</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 w-10 h-10 bg-terracotta-500/20 rounded-xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-heading font-bold text-sm text-navy-800 mb-0.5">限定動画・写真</h4>
+                  <p class="text-navy-500 text-xs leading-relaxed">限定コンテンツを不定期で配信</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 w-10 h-10 bg-terracotta-500/20 rounded-xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-heading font-bold text-sm text-navy-800 mb-0.5">かんたんアクセス</h4>
+                  <p class="text-navy-500 text-xs leading-relaxed">各コンテンツへワンタップでアクセス</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <!-- QRコード -->
+              <div class="bg-white rounded-2xl p-4 shadow-md border border-navy-100">
+                <img src="https://qr-official.line.me/sid/L/rbAJhbw.png" alt="LINE公式QRコード" class="w-36 h-36 sm:w-40 sm:h-40" />
+                <p class="text-navy-400 text-[10px] text-center mt-2 font-bold">QRコードで友だち追加</p>
+              </div>
+              <!-- ボタン -->
+              <div class="text-center">
+                <a href="https://lin.ee/rbAJhbw" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-3 px-10 py-4 bg-[#06C755] hover:bg-[#05b04c] text-white font-bold text-sm tracking-wider2 rounded-full shadow-lg shadow-[#06C755]/30 transition-all hover:shadow-xl hover:shadow-[#06C755]/40 hover:-translate-y-0.5">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"></path></svg>
+                  公式LINEに登録する
+                </a>
+                <p class="text-navy-400 text-xs mt-3">または上のQRコードをスキャン</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Copyright -->
+      <p class="absolute bottom-3 left-0 right-0 text-center text-navy-300 text-[10px] tracking-wider z-10">&copy; 2026 O.M.E. All Rights Reserved.</p>
+    </section>
+
+  </div><!-- /h-scroll-container -->
+
+
+  <!-- ================================================================
+       JAVASCRIPT - Horizontal Scroll Engine
+       ================================================================ -->
+  <script>
+    // ===== CONFIG =====
+    const TOTAL_PANELS = 9;
+    const MOBILE_BREAKPOINT = 751;
+    let isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+
+    const hScroll = document.getElementById('hScroll');
+    const panels = document.querySelectorAll('.h-panel');
+    const dots = document.querySelectorAll('.nav-dot');
+    const progressBar = document.getElementById('scrollProgress');
+    const sectionNavLinks = document.querySelectorAll('#sectionNav a[data-nav]');
+    const panelAnchors = ['m-hero', 'm-live', 'm-profile', 'm-discography', 'm-sakamichi', 'm-store', 'm-fanclub', 'm-contact', 'm-line'];
+
+    // ===== SMOOTH CONTINUOUS SCROLL ENGINE =====
+    // Total scrollable width in px (computed dynamically)
+    let totalWidth = 0;
+    let viewportW = window.innerWidth;
+
+    // Current position (target & rendered), in px
+    let scrollTarget = 0;   // where we WANT to be
+    let scrollCurrent = 0;  // where we ARE (smoothly interpolated)
+    const EASE = 0.08;      // lerp factor — lower = smoother/slower, higher = snappier
+
+    function computeTotalWidth() {
+      viewportW = window.innerWidth;
+      totalWidth = viewportW * TOTAL_PANELS;
+    }
+    computeTotalWidth();
+
+    // Clamp helper
+    function clamp(val, min, max) {
+      return Math.max(min, Math.min(max, val));
+    }
+
+    // Max scroll in px
+    function maxScroll() {
+      return totalWidth - viewportW;
+    }
+
+    // ===== ANIMATION LOOP (requestAnimationFrame) =====
+    let rafId = null;
+    let prevActivePanel = 0;
+    const sectionNav = document.getElementById('sectionNav');
+
+    function animate() {
+      if (isMobile) { rafId = requestAnimationFrame(animate); return; }
+
+      // Lerp toward target
+      scrollCurrent += (scrollTarget - scrollCurrent) * EASE;
+
+      // Snap if very close
+      if (Math.abs(scrollTarget - scrollCurrent) < 0.5) {
+        scrollCurrent = scrollTarget;
+      }
+
+      // Apply transform
+      hScroll.style.transform = `translateX(${-scrollCurrent}px)`;
+
+      // Determine active panel
+      const activePanel = Math.round(scrollCurrent / viewportW);
+      const clampedPanel = clamp(activePanel, 0, TOTAL_PANELS - 1);
+
+      if (clampedPanel !== prevActivePanel) {
+        // Auto-collapse sakamichi gallery when leaving panel 4
+        if (prevActivePanel === 4 && sakamichiExpanded) {
+          sakamichiExpanded = false;
+          const gridMore = document.getElementById('sakamichi-grid-more');
+          const toggleText = document.getElementById('sakamichiToggleText');
+          const toggleIcon = document.getElementById('sakamichiToggleIcon');
+          const spacer = document.getElementById('sakamichiSpacer');
+          const container = document.getElementById('sakamichiScrollContainer');
+          if (gridMore) gridMore.classList.add('hidden');
+          if (spacer) spacer.classList.add('hidden');
+          if (container) {
+            container.classList.remove('overflow-y-auto', 'inner-scroll');
+            container.classList.add('overflow-hidden');
+            container.scrollTop = 0;
+          }
+          if (toggleText) toggleText.textContent = 'すべて見る';
+          if (toggleIcon) toggleIcon.style.transform = '';
+        }
+        prevActivePanel = clampedPanel;
+        // Update nav dots
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === clampedPanel));
+        // Update panel content animations
+        panels.forEach((panel, i) => panel.classList.toggle('active', i === clampedPanel));
+        // Update section nav active link
+        sectionNavLinks.forEach((link, i) => link.classList.toggle('active', i === clampedPanel));
+      }
+
+      // Show/hide Home button & section nav (visible when away from hero)
+      const showHome = scrollCurrent > viewportW * 0.3;
+      if (sectionNav) {
+        sectionNav.classList.toggle('visible', showHome);
+      }
+
+      // Update progress bar
+      const ms = maxScroll();
+      const progress = ms > 0 ? (scrollCurrent / ms) * 100 : 0;
+      progressBar.style.width = `${progress}%`;
+
+      rafId = requestAnimationFrame(animate);
+    }
+    rafId = requestAnimationFrame(animate);
+
+    // ===== GO TO PANEL (smooth scroll to panel position) =====
+    function goToPanel(index) {
+      if (index < 0 || index >= TOTAL_PANELS) return;
+
+      // Mobile: scroll to anchor
+      if (isMobile) {
+        const target = document.getElementById(panelAnchors[index]);
+        if (target) {
+          const headerH = document.getElementById('mobileHeader')?.offsetHeight || 56;
+          const y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      scrollTarget = clamp(index * viewportW, 0, maxScroll());
+    }
+
+    // ===== WHEEL EVENT → CONTINUOUS HORIZONTAL SCROLL =====
+    const SCROLL_SPEED = 1.2; // multiplier for wheel deltaY → horizontal px
+
+    function handleWheel(e) {
+      if (isMobile) return;
+
+      // Allow inner scrollable areas to scroll naturally
+      const innerScroll = e.target.closest('.inner-scroll');
+      if (innerScroll) {
+        const { scrollTop, scrollHeight, clientHeight } = innerScroll;
+        const atTop = scrollTop <= 0;
+        const atBottom = scrollTop + clientHeight >= scrollHeight - 2;
+        if (scrollHeight > clientHeight) {
+          if (e.deltaY < 0 && !atTop) return;
+          if (e.deltaY > 0 && !atBottom) return;
+        }
+      }
+
+      e.preventDefault();
+
+      // Directly add wheel delta to scroll target (continuous, fine-grained)
+      scrollTarget += e.deltaY * SCROLL_SPEED;
+      scrollTarget = clamp(scrollTarget, 0, maxScroll());
+    }
+
+    // ===== TOUCH SUPPORT (swipe → continuous) =====
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchLastX = 0;
+    let isTouchScrolling = false;
+
+    function handleTouchStart(e) {
+      if (isMobile) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchLastX = touchStartX;
+      isTouchScrolling = false;
+    }
+
+    function handleTouchMove(e) {
+      if (isMobile) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+
+      // Determine if horizontal swipe
+      if (!isTouchScrolling) {
+        const dx = Math.abs(currentX - touchStartX);
+        const dy = Math.abs(currentY - touchStartY);
+        if (dx > dy && dx > 10) {
+          isTouchScrolling = true;
+        } else if (dy > dx) {
+          return; // vertical swipe, ignore
+        }
+      }
+
+      if (isTouchScrolling) {
+        e.preventDefault();
+        const delta = touchLastX - currentX;
+        scrollTarget += delta * 1.5;
+        scrollTarget = clamp(scrollTarget, 0, maxScroll());
+        touchLastX = currentX;
+      }
+    }
+
+    function handleTouchEnd() {
+      isTouchScrolling = false;
+    }
+
+    // ===== KEYBOARD NAVIGATION =====
+    function handleKeydown(e) {
+      if (isMobile) return;
+      const activePanel = Math.round(scrollTarget / viewportW);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        goToPanel(clamp(activePanel + 1, 0, TOTAL_PANELS - 1));
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        goToPanel(clamp(activePanel - 1, 0, TOTAL_PANELS - 1));
+      }
+    }
+
+    // ===== NAV DOT CLICKS =====
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const index = parseInt(dot.getAttribute('data-index'));
+        goToPanel(index);
+      });
+    });
+
+    // ===== RESPONSIVE =====
+    function checkMobile() {
+      const wasMobile = isMobile;
+      isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+      computeTotalWidth();
+
+      if (isMobile && !wasMobile) {
+        hScroll.style.transform = 'none';
+        panels.forEach(p => p.classList.add('active'));
+      } else if (!isMobile && wasMobile) {
+        scrollTarget = 0;
+        scrollCurrent = 0;
+        hScroll.style.transform = 'translateX(0)';
+        panels.forEach((p, i) => p.classList.toggle('active', i === 0));
+        dots.forEach((d, i) => d.classList.toggle('active', i === 0));
+        progressBar.style.width = '0%';
+      }
+    }
+
+    // ===== MOBILE MENU =====
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const navBackdrop = document.getElementById('navBackdrop');
+    let menuOpen = false;
+
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      hamburger.classList.toggle('menu-open', menuOpen);
+      mobileNav.classList.toggle('open', menuOpen);
+      navBackdrop.classList.toggle('hidden', !menuOpen);
+      hamburger.setAttribute('aria-expanded', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    }
+
+    if (hamburger) hamburger.addEventListener('click', toggleMenu);
+    if (navBackdrop) navBackdrop.addEventListener('click', toggleMenu);
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => { if (menuOpen) toggleMenu(); });
+    });
+
+    // ===== MOBILE HOME BUTTON (show/hide on vertical scroll) =====
+    const homeBtnMobile = document.getElementById('homeBtnMobile');
+    window.addEventListener('scroll', () => {
+      if (!isMobile || !homeBtnMobile) return;
+      const show = window.scrollY > 300;
+      homeBtnMobile.style.opacity = show ? '1' : '0';
+      homeBtnMobile.style.pointerEvents = show ? 'auto' : 'none';
+    }, { passive: true });
+
+    // ===== INIT EVENT LISTENERS =====
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('keydown', handleKeydown);
+    window.addEventListener('resize', () => { computeTotalWidth(); checkMobile(); });
+
+    // Initial state
+    checkMobile();
+    if (isMobile) {
+      panels.forEach(p => p.classList.add('active'));
+    }
+
+    // ===== GOOGLE SHEETS → LIVE SCHEDULE =====
+    //
+    // スプレッドシートの列構成（1行目はヘッダー）:
+    //   A: 日付 (例: 2026/07/12)
+    //   B: 曜日 (例: SAT)
+    //   C: タイトル (例: オカダユータ ワンマンライブ「文月」)
+    //   D: 詳細 (例: 水戸「誉りみち」 ／ 開場 16:30 ／ 開演 17:00 ／ ¥4,000+1D)
+    //   E: ステータス (例: 予約受付中, 観覧無料, LINE先行, 近日発売, SOLD OUT)
+    //   F: ステータス色 (例: terracotta, gold, navy, green)  ※省略可
+    //
+    // ▼ 使い方:
+    // 1. Googleスプレッドシートを作り、上記の列で入力
+    // 2. [ファイル] → [共有] → [ウェブに公開] → シート1, CSV形式
+    // 3. 下の SHEET_CSV_URL に公開URLを貼り付け
+    //
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/19tZcJEr931dOiOiRSKuIgeqzyp5DxDkmPJPQzsAmdrE/pub?output=csv';
+    // Google Visualization API (CORS-free, works from file://)
+    const SHEET_ID = '19tZcJEr931dOiOiRSKuIgeqzyp5DxDkmPJPQzsAmdrE';
+    const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+    // ===== Instagram統計 自動反映 =====
+    // 方法1: ここに直接数値を書く（手動更新）
+    // 方法2: スプレッドシートの「設定」シートから自動取得（下記参照）
+    const IG_DEFAULTS = { posts: 187, followers: 1579 };
+
+    // スプレッドシートの「設定」シート（Sheet2）からInstagram統計を自動取得
+    // ※ スプレッドシートの Sheet2 に A1:「投稿数」B1:「フォロワー数」、A2: 187, B2: 1579 のように入力
+    const IG_SETTINGS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=設定`;
+
+    function loadInstagramStats() {
+      const script = document.createElement('script');
+      const cbName = 'igStatsCallback_' + Date.now();
+      window[cbName] = function(response) {
+        try {
+          const rows = response.table.rows;
+          if (rows && rows.length > 0) {
+            const rawPosts = rows[0].c[0] ? rows[0].c[0].v : null;
+            const rawFollowers = rows[0].c[1] ? rows[0].c[1].v : null;
+            // 数値チェック: NaNの場合はデフォルト値を使用
+            const posts = (typeof rawPosts === 'number' && !isNaN(rawPosts)) ? rawPosts : IG_DEFAULTS.posts;
+            const followers = (typeof rawFollowers === 'number' && !isNaN(rawFollowers)) ? rawFollowers : IG_DEFAULTS.followers;
+            updateInstagramDisplay(posts, followers);
+          }
+        } catch (e) {
+          console.warn('Instagram stats from sheet failed, using defaults:', e.message);
+        }
+        script.remove();
+        delete window[cbName];
+      };
+      script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cbName}&sheet=%E8%A8%AD%E5%AE%9A&headers=1`;
+      script.onerror = function() {
+        console.warn('Instagram stats sheet not available, using defaults');
+        script.remove();
+        delete window[cbName];
+      };
+      document.body.appendChild(script);
+    }
+
+    function updateInstagramDisplay(posts, followers) {
+      const postsEl = document.getElementById('ig-posts');
+      const followersEl = document.getElementById('ig-followers');
+      if (postsEl && posts != null) postsEl.textContent = Number(posts).toLocaleString();
+      if (followersEl && followers != null) followersEl.textContent = Number(followers).toLocaleString();
+    }
+
+    // スプレッドシートの「設定」シートから取得を試行（失敗時はHTML初期値のまま）
+    loadInstagramStats();
+
+    // ステータス色の定義
+    const statusColors = {
+      'blue':       'bg-[#3B82F6] text-white',           // 無料ライブ — 爽やか・気軽に
+      'green':      'bg-[#22C55E] text-white',           // 有料ライブ — 特別感
+      'pink':       'bg-[#EC4899] text-white',           // イベント・フェス — 華やか
+      'purple':     'bg-[#8B5CF6] text-white',           // メディア出演 — ポップ
+      'skyblue':    'bg-[#0EA5E9] text-white',           // リリース — 新鮮
+      'navy':       'bg-navy-700 text-white',            // ワンマンライブ — 格式
+      'red':        'bg-red-500 text-white',             // SOLD OUT
+      'default':    'bg-[#3B82F6] text-white'
+    };
+
+    // 曜日の自動判定
+    const DAY_NAMES = ['日', '月', '火', '水', '木', '金', '土'];
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      if (lines.length < 2) return [];
+      // Skip header row
+      return lines.slice(1).map(line => {
+        // Handle quoted CSV fields
+        const fields = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') { inQuotes = !inQuotes; }
+          else if (ch === ',' && !inQuotes) { fields.push(current.trim()); current = ''; }
+          else { current += ch; }
+        }
+        fields.push(current.trim());
+        return fields;
+      }).filter(f => f[0]); // skip empty rows
+    }
+
+    // 列構成: A日付, B曜日, Cタイトル, D詳細, Eステータス, Fワンマン, G:SOLD OUT, H:色
+    const LIVE_INITIAL_COUNT = 5; // 最初に表示する件数
+
+    // ステータス名 → 色キーのフォールバック（H列が空の時に使用）
+    const statusToColor = {
+      '無料ライブ':     'blue',
+      '有料ライブ':     'green',
+      'メディア出演':   'purple',
+      'リリース':       'skyblue',
+      'イベント・フェス': 'pink',
+    };
+    let liveExpanded = false;
+
+    function renderLiveCard(dateStr, dayOfWeek, title, details, status, soldOut, colorKey, isOneManFlag, index, imageFile) {
+      const d = new Date(dateStr);
+      const month = d.getMonth() + 1;
+      const date = d.getDate();
+      const yyyy = d.getFullYear();
+      const day = dayOfWeek || DAY_NAMES[d.getDay()] || '';
+
+      const isSoldOut = (soldOut === 'TRUE' || soldOut === true || soldOut === 'true');
+      const isOneMan = (isOneManFlag === 'TRUE' || isOneManFlag === true || isOneManFlag === 'true')
+                     || (title && (title.includes('ワンマン') || title.includes('ONE MAN') || title.includes('oneman')));
+      // 色の決定: SOLD OUT → red / ステータス名から自動判定 → H列の色 → デフォルト
+      const resolvedColor = statusToColor[status] || colorKey || 'default';
+      const effectiveColor = isSoldOut ? 'red' : resolvedColor;
+      const colorClass = statusColors[effectiveColor] || statusColors['default'];
+      const displayStatus = isSoldOut ? 'THANK YOU SOLD OUT' : status;
+
+      const isPast = d < new Date(new Date().toDateString());
+      const pastClass = isPast ? 'opacity-50' : '';
+      const soldOutTitleClass = isSoldOut ? 'line-through opacity-60' : '';
+      const hiddenClass = (index >= LIVE_INITIAL_COUNT) ? 'live-card-hidden hidden' : '';
+
+      // 左ボーダー: ステータスの色に連動（SOLD OUT時は赤）
+      const borderColors = {
+        'blue':       'border-l-[#3B82F6]',
+        'green':      'border-l-[#22C55E]',
+        'pink':       'border-l-[#EC4899]',
+        'purple':     'border-l-[#8B5CF6]',
+        'skyblue':    'border-l-[#0EA5E9]',
+        'navy':       'border-l-navy-700',
+        'red':        'border-l-red-500',
+      };
+      const leftBorder = 'border-l-4 ' + (borderColors[effectiveColor] || 'border-l-terracotta-500');
+
+      // バッジ部分: SOLD OUT → THANK YOU SOLD OUTのみ / それ以外 → ステータス + ワンマンバッジ
+      let badgeHtml = '';
+      if (isSoldOut) {
+        badgeHtml = `<span class="text-[11px] font-bold tracking-wider px-3 py-1 ${colorClass} rounded-full shrink-0 whitespace-nowrap">THANK YOU SOLD OUT</span>`;
+      } else {
+        badgeHtml = displayStatus ? `<span class="text-[11px] font-bold tracking-wider px-3 py-1 ${colorClass} rounded-full shrink-0 whitespace-nowrap">${displayStatus}</span>` : '';
+        if (isOneMan) {
+          badgeHtml += `<span class="text-[10px] font-black tracking-wider px-2.5 py-0.5 bg-navy-700 text-white rounded-full whitespace-nowrap">ONE MAN LIVE</span>`;
+        }
+      }
+
+      // 展開エリア: 画像 + 詳細テキスト
+      const hasImage = imageFile && imageFile.trim() !== '';
+      const hasDetails = details && details.trim() !== '';
+      const hasExpandContent = hasImage || hasDetails;
+
+      let expandHtml = '';
+      if (hasExpandContent) {
+        const imageHtml = hasImage
+          ? `<div class="${hasDetails ? 'sm:w-2/5' : 'w-full'}">
+               <img src="images/${imageFile.trim()}" alt="${title}" class="w-full rounded-lg shadow-sm" onerror="this.parentElement.style.display='none'" />
+             </div>`
+          : '';
+
+        const detailLines = hasDetails ? details.split(/[\/／]/).map(d => d.trim()).filter(Boolean) : [];
+        const detailHtml = hasDetails
+          ? `<div class="${hasImage ? 'sm:w-3/5' : 'w-full'}">
+               <ul class="space-y-1.5">
+                 ${detailLines.map(line => `<li class="flex items-start gap-2 text-navy-600 text-sm leading-relaxed">
+                   <span class="w-1.5 h-1.5 rounded-full bg-terracotta-400 mt-1.5 shrink-0"></span>
+                   <span>${line}</span>
+                 </li>`).join('')}
+               </ul>
+             </div>`
+          : '';
+
+        expandHtml = `
+          <div id="live-detail-${index}" class="hidden mt-3 pt-3 border-t border-navy-100/60">
+            <div class="flex flex-col sm:flex-row gap-4">
+              ${imageHtml}
+              ${detailHtml}
+            </div>
+          </div>`;
+      }
+
+      // chevronアイコン（展開可能な場合のみ表示）
+      const chevronHtml = hasExpandContent
+        ? `<svg id="live-chevron-${index}" class="w-4 h-4 text-navy-300 transition-transform duration-200 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`
+        : '';
+
+      const cursorClass = hasExpandContent ? 'cursor-pointer' : '';
+      const onClickAttr = hasExpandContent ? `onclick="toggleLiveDetail(${index})"` : '';
+
+      return `
+        <div class="card-hover bg-white rounded-xl p-4 border border-navy-100 ${leftBorder} ${pastClass} ${hiddenClass} ${cursorClass}" ${onClickAttr}>
+          <div class="flex items-center justify-between gap-3 mb-1.5">
+            <p class="${isSoldOut ? 'text-red-400' : 'text-terracotta-500'} font-heading font-black text-lg leading-none whitespace-nowrap">${month}月${date}日（${day}）</p>
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="flex flex-col items-end gap-1">
+                ${badgeHtml}
+              </div>
+              ${chevronHtml}
+            </div>
+          </div>
+          <h3 class="font-heading font-bold text-[15px] text-navy-800 mb-0.5 ${soldOutTitleClass}">${title}</h3>
+          ${details ? `<p class="text-navy-500 text-xs leading-relaxed ${soldOutTitleClass}">${details}</p>` : ''}
+          ${expandHtml}
+        </div>`;
+    }
+
+    // ── ライブスケジュール読み込み（多段フォールバック方式） ──
+    // 方法1: JSONP (script tag injection) — CORS不要
+    // 方法2: fetch CSV — HTTPサーバー経由なら動作
+    // 方法3: フォールバックデータ表示
+
+    function processSheetData(data) {
+      const container = document.getElementById('liveScheduleContainer');
+      const errorMsg = document.getElementById('liveError');
+      const loading = document.getElementById('liveLoading');
+      if (loading) loading.remove();
+
+      if (!data || data.length === 0) {
+        container.innerHTML = renderFallbackSchedule();
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+
+      // 日付順にソート
+      data.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+
+      // 過去のライブは非表示、今日以降のみ表示
+      const now = new Date(new Date().toDateString());
+      const display = data.filter(r => new Date(r[0]) >= now);
+
+      if (display.length === 0) {
+        container.innerHTML = renderFallbackSchedule();
+        return;
+      }
+
+      // r = [日付, 曜日, タイトル, 詳細, ステータス, ワンマン, SOLD OUT, 色, 画像]
+      // renderLiveCard(dateStr, dayOfWeek, title, details, status, soldOut, colorKey, isOneManFlag, index, imageFile)
+      container.innerHTML = display.map((r, i) =>
+        renderLiveCard(r[0], r[1], r[2], r[3], r[4], r[6], r[7], r[5], i, r[8] || '')
+      ).join('');
+
+      // 「もっと見る」ボタンの表示制御
+      const toggleWrap = document.getElementById('liveToggleWrap');
+      if (display.length > LIVE_INITIAL_COUNT) {
+        toggleWrap.classList.remove('hidden');
+      }
+      console.log('Live schedule loaded:', display.length, 'events');
+    }
+
+    // もっと見る / 閉じる 切り替え
+    function toggleLiveCards() {
+      liveExpanded = !liveExpanded;
+      const hiddenCards = document.querySelectorAll('.live-card-hidden');
+      const toggleText = document.getElementById('liveToggleText');
+      const toggleIcon = document.getElementById('liveToggleIcon');
+
+      hiddenCards.forEach(card => {
+        card.classList.toggle('hidden', !liveExpanded);
+      });
+      toggleText.textContent = liveExpanded ? '閉じる' : 'もっと見る';
+      toggleIcon.style.transform = liveExpanded ? 'rotate(180deg)' : '';
+    }
+
+    // ライブカード詳細展開（アコーディオン）
+    function toggleLiveDetail(index) {
+      const detail = document.getElementById('live-detail-' + index);
+      const icon = document.getElementById('live-chevron-' + index);
+      if (!detail) return;
+      if (detail.classList.contains('hidden')) {
+        detail.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      } else {
+        detail.classList.add('hidden');
+        if (icon) icon.style.transform = '';
+      }
+    }
+
+    // ショップ カテゴリ切替
+    function switchStoreCategory(category) {
+      document.querySelectorAll('.store-category').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.store-tab').forEach(btn => {
+        btn.classList.remove('active', 'bg-cyan-600', 'text-white');
+        btn.classList.add('bg-navy-100', 'text-navy-500', 'hover:bg-navy-200');
+      });
+      const target = document.getElementById('store-' + category);
+      if (target) target.classList.remove('hidden');
+      const activeTab = document.querySelector('.store-tab[data-category="' + category + '"]');
+      if (activeTab) {
+        activeTab.classList.add('active', 'bg-cyan-600', 'text-white');
+        activeTab.classList.remove('bg-navy-100', 'text-navy-500', 'hover:bg-navy-200');
+      }
+    }
+
+    // ===== 坂道さんぽ 動画ギャラリー =====
+    // 動画リスト: 新しい順（#番号, YouTube動画ID, サブタイトル）
+    // ※ 動画を追加する場合はこのリストの先頭に追加してください
+    const SAKAMICHI_VIDEOS = [
+      { num: 19, id: 'x-2hWXilBgs', subtitle: '神戸市灘区 青谷道登山口への坂' },
+      { num: 18, id: 'lupr1lynY0Q', subtitle: '神戸市東灘区 岡本山手の坂' },
+      { num: 17, id: '8qnC1Xf4SXw', subtitle: '神戸市垂水区 ライオン坂' },
+      { num: 16, id: 'l6QLAZ1pZV0', subtitle: '神戸市灘区 地獄坂' },
+      { num: 15, id: '-uVkQqtVIwk', subtitle: '神戸市灘区 伯母野山の坂' },
+      { num: 14, id: '_ANKsKtD7LM', subtitle: '神戸市中央区 熊内台の坂' },
+      { num: 13, id: 'MCWz7Wq9OC4', subtitle: '神戸市中央区 諏訪神社-ビーナスブリッジ' },
+      { num: 12, id: '6zXhdArrwQs', subtitle: '神戸市東灘区 保久良神社の参道' },
+      { num: 11, id: 'yTq3242E_ys', subtitle: '神戸市灘区 鶴甲のてっぺん坂' },
+      { num: 10, id: 'FHvdYIDiDIU', subtitle: '神戸市灘区 長峰坂' },
+      { num: 9,  id: '8jvF6H62PG8', subtitle: '神戸市垂水区 塩屋町の坂' },
+      { num: 8,  id: 'hOUx-l_T-CA', subtitle: '神戸市中央区 北野坂' },
+      { num: 7,  id: 'D5adDqLuGJQ', subtitle: '神戸市長田区 恋訪坂' },
+      { num: 6,  id: 'cbuLHp7eE7Y', subtitle: '神戸市北区 有馬温泉の坂' },
+      { num: 5,  id: 'sXtW3VnucHc', subtitle: '神戸市西区 神出神社参道' },
+      { num: 4,  id: 'YAykIaJP45Q', subtitle: '神戸市垂水区 愛徳坂' },
+      { num: 3,  id: 'DoEeQp6Zp4o', subtitle: '神戸市須磨区 きつね坂・たぬき坂' },
+      { num: 2,  id: 'I39vBuqj7jA', subtitle: '神戸市東灘区 くねくね坂' },
+      { num: 1,  id: '0GB7-KkTgoU', subtitle: '神戸市灘区 国魂ストレート坂' },
+    ];
+
+    const SAKAMICHI_INITIAL_COUNT = 6;
+    let sakamichiExpanded = false;
+
+    function renderSakamichiCard(video) {
+      const thumbUrl = `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`;
+      const videoUrl = `https://www.youtube.com/watch?v=${video.id}`;
+      return `
+        <a href="${videoUrl}" target="_blank" rel="noopener noreferrer" class="group block rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+          <div class="relative aspect-video bg-navy-100 overflow-hidden">
+            <img src="${thumbUrl}" alt="坂道さんぽ #${video.num}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+              <div class="w-9 h-9 bg-red-600/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
+                <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+              </div>
+            </div>
+            <div class="absolute bottom-1.5 left-1.5">
+              <span class="inline-block px-1.5 py-0.5 bg-black/60 backdrop-blur-sm text-white text-[9px] font-bold rounded">#${video.num}</span>
+            </div>
+          </div>
+          <div class="px-2 py-1.5">
+            <p class="text-navy-800 text-[11px] font-bold truncate">${video.subtitle || '坂道さんぽ #' + video.num}</p>
+          </div>
+        </a>
+      `;
+    }
+
+    function initSakamichiGallery() {
+      const grid = document.getElementById('sakamichi-grid');
+      const gridMore = document.getElementById('sakamichi-grid-more');
+      const toggleBtn = document.getElementById('sakamichiToggleBtn');
+      if (!grid) return;
+
+      const initial = SAKAMICHI_VIDEOS.slice(0, SAKAMICHI_INITIAL_COUNT);
+      const rest = SAKAMICHI_VIDEOS.slice(SAKAMICHI_INITIAL_COUNT);
+
+      grid.innerHTML = initial.map(v => renderSakamichiCard(v)).join('');
+
+      if (rest.length > 0) {
+        gridMore.innerHTML = rest.map(v => renderSakamichiCard(v)).join('');
+        toggleBtn.classList.remove('hidden');
+        toggleBtn.classList.add('inline-flex');
+      }
+    }
+
+    function toggleSakamichiVideos() {
+      sakamichiExpanded = !sakamichiExpanded;
+      const gridMore = document.getElementById('sakamichi-grid-more');
+      const toggleText = document.getElementById('sakamichiToggleText');
+      const toggleIcon = document.getElementById('sakamichiToggleIcon');
+      const spacer = document.getElementById('sakamichiSpacer');
+      const container = document.getElementById('sakamichiScrollContainer');
+
+      gridMore.classList.toggle('hidden', !sakamichiExpanded);
+      if (spacer) spacer.classList.toggle('hidden', !sakamichiExpanded);
+      if (container) {
+        if (sakamichiExpanded) {
+          container.classList.remove('overflow-hidden');
+          container.classList.add('overflow-y-auto', 'inner-scroll');
+        } else {
+          container.classList.remove('overflow-y-auto', 'inner-scroll');
+          container.classList.add('overflow-hidden');
+          container.scrollTop = 0;
+        }
+      }
+      toggleText.textContent = sakamichiExpanded ? '閉じる' : 'すべて見る';
+      toggleIcon.style.transform = sakamichiExpanded ? 'rotate(180deg)' : '';
+    }
+
+    // Initialize gallery on load
+    document.addEventListener('DOMContentLoaded', initSakamichiGallery);
+
+    function parseGvizResponse(response) {
+      if (!response || !response.table || !response.table.rows.length) return null;
+      const rows = response.table.rows.map(row => {
+        return row.c.map(cell => {
+          if (!cell || cell.v === null || cell.v === undefined) return '';
+          if (typeof cell.v === 'string' && cell.v.startsWith('Date(')) {
+            const parts = cell.v.match(/Date\((\d+),(\d+),(\d+)\)/);
+            if (parts) {
+              const y = parts[1];
+              const m = String(Number(parts[2]) + 1).padStart(2, '0');
+              const d = parts[3].padStart(2, '0');
+              return `${y}/${m}/${d}`;
+            }
+          }
+          return String(cell.v);
+        });
+      });
+      // Skip header if present
+      return (rows[0] && rows[0][0] && rows[0][0].match(/日付|date/i)) ? rows.slice(1) : rows;
+    }
+
+    // 方法1: JSONP via script tag injection
+    function loadViaJSONP() {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        const cbName = 'handleLiveData_' + Date.now();
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error('JSONP timeout'));
+        }, 8000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[cbName];
+          if (script.parentNode) script.remove();
+        }
+
+        window[cbName] = function(response) {
+          cleanup();
+          try {
+            const data = parseGvizResponse(response);
+            if (data && data.length > 0) resolve(data);
+            else reject(new Error('No data in GVIZ response'));
+          } catch (e) { reject(e); }
+        };
+
+        script.onerror = function() { cleanup(); reject(new Error('Script load error')); };
+        script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cbName}`;
+        document.head.appendChild(script);
+      });
+    }
+
+    // 方法2: fetch CSV
+    function loadViaFetchCSV() {
+      return fetch(SHEET_CSV_URL)
+        .then(res => {
+          if (!res.ok) throw new Error('CSV fetch failed: ' + res.status);
+          return res.text();
+        })
+        .then(text => {
+          const data = parseCSV(text);
+          if (data && data.length > 0) return data;
+          throw new Error('No data in CSV');
+        });
+    }
+
+    // 方法3: fetch GVIZ JSON (サーバー経由の場合CORSで動く可能性)
+    function loadViaFetchGviz() {
+      return fetch(GVIZ_URL)
+        .then(res => {
+          if (!res.ok) throw new Error('GVIZ fetch failed: ' + res.status);
+          return res.text();
+        })
+        .then(text => {
+          // Remove JSONP wrapper: google.visualization.Query.setResponse({...})
+          const match = text.match(/\{[\s\S]*\}/);
+          if (!match) throw new Error('Cannot parse GVIZ text response');
+          const json = JSON.parse(match[0]);
+          const data = parseGvizResponse(json);
+          if (data && data.length > 0) return data;
+          throw new Error('No data in GVIZ fetch');
+        });
+    }
+
+    function loadLiveSchedule() {
+      const container = document.getElementById('liveScheduleContainer');
+      const errorMsg = document.getElementById('liveError');
+
+      if (!SHEET_ID) {
+        container.innerHTML = renderFallbackSchedule();
+        return;
+      }
+
+      console.log('Loading live schedule...');
+
+      // 多段フォールバック: JSONP → fetch CSV → fetch GVIZ → fallback
+      loadViaJSONP()
+        .catch(err => {
+          console.warn('JSONP failed:', err.message, '→ trying fetch CSV...');
+          return loadViaFetchCSV();
+        })
+        .catch(err => {
+          console.warn('Fetch CSV failed:', err.message, '→ trying fetch GVIZ...');
+          return loadViaFetchGviz();
+        })
+        .then(data => {
+          processSheetData(data);
+        })
+        .catch(err => {
+          console.warn('All methods failed:', err.message, '→ using fallback data');
+          const loading = document.getElementById('liveLoading');
+          if (loading) loading.remove();
+          container.innerHTML = renderFallbackSchedule();
+          errorMsg.classList.remove('hidden');
+        });
+    }
+
+    // フォールバック: スプレッドシート未接続時のサンプルデータ
+    // 引数: (日付, 曜日, タイトル, 詳細, ステータス, soldOut, colorKey, isOneManFlag, index, imageFile)
+    function renderFallbackSchedule() {
+      return [
+        renderLiveCard('2026/02/09', '日', 'MINOH de LIVE! Vol.23', 'みのおキューズモール ／ 観覧無料', '無料ライブ', false, 'blue', false, 0, ''),
+        renderLiveCard('2026/02/24', '火', 'まほろばの音 Vol.31', '奈良エリア ／ 詳細は公式LINEにてご案内', '有料ライブ', false, 'green', false, 1, ''),
+        renderLiveCard('2026/07/12', '土', 'オカダユータ ワンマンライブ「文月」', '水戸「誉りみち」 ／ 開場 16:30 ／ 開演 17:00 ／ ¥4,000+1D', '有料ライブ', 'TRUE', 'red', 'TRUE', 2, ''),
+        renderLiveCard('2026/07/12', '土', 'フリーライブ in イオンタウン水戸南', 'イオンタウン水戸南 ／ ①11:00〜 ②12:00〜 ／ 観覧無料', '無料ライブ', false, 'blue', false, 3, ''),
+        renderLiveCard('2026/07/13', '日', 'KEYAKI SONGS Vol.18 ＆ ワンマン「July」', '府中 FORIS（無料3部制）／ カフェsou-zou（¥4,000+1D）', 'イベント・フェス', false, 'pink', false, 4, ''),
+      ].join('');
+    }
+
+    // ページ読み込み時にスケジュールを取得
+    loadLiveSchedule();
+  </script>
+
+
+</body>
+</html>
